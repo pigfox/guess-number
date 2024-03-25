@@ -61,3 +61,8 @@ body {
     max-width: 100%; /* Makes the image responsive */
     height: auto;
   }
+
+  .small{
+    color:blue;
+    font-size:10px;
+  }
