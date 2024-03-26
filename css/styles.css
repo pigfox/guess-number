@@ -13,6 +13,7 @@ body {
   .content {
     padding: 5px;
   }
+  
   @media (max-width: 600px) {
     .header img {
       height: 35px;

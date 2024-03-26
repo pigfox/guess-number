@@ -64,8 +64,8 @@ connectContractBtn.addEventListener('click', () => {
     // Example of how to use the contract to call a method
     contract.methods.getMaxNumber().call()
       .then(result => {
-        console.log("Max number is: ", result);
-        document.getElementById("contractArea").innerHTML = "Max number is: " + result;
+        console.log("Max number: ", result);
+        document.getElementById("contractArea").innerHTML = "Max number: " + result;
       })
       .catch(error => {
         console.error("An error occurred: ", error);
