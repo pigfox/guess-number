@@ -1,17 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guess A Number</title>
-<link rel="icon" href="/favicon.ico">
-<script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
-<script src="./js/index.js" ></script>
-<link rel="stylesheet" href="./css/styles.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guess A Number</title>
+  <link rel="icon" href="/favicon.ico">
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
+  <script src="./js/index.js" ></script>
+  <link rel="stylesheet" href="./css/styles.css"/>
 </head>
 <body>
 <div class="content">
-  <img src="./img/logo.png" alt="Logo" id="logo"/> 
+  <img src="./img/logo.png" alt="Logo" id="logo"/>
   <h3>Guess a number on Sepolia</h3>
   <div><button id="connectMetamaskBtn" class="btn shape">Connect Metamask</button></div>
   <div id="accountArea"></div>
@@ -28,85 +29,104 @@
   </div>
   <div class="small txt">A demo by <a href="https://pigfox.com" target="_blank">Pigfox</a></div>
 </div>
-  <script>
-    // Define these as top-level variables but don't initialize `contract` yet since Web3 and the contract depend on MetaMask being connected
-
-    let web3;
-    if (!window.web3) {
-      web3 = new Web3(window.ethereum);
+<script>
+  const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
+  connectMetamaskBtn.addEventListener('click', () => {
+    if (typeof window.ethereum !== 'undefined') {
+      console.log('MetaMask is installed!');
+      window.ethereum.request({ method: 'eth_requestAccounts' })
+              .then(accounts => {
+                console.log('Connected', accounts[0]);
+                connectMetamaskBtn.textContent = 'Connected';
+              })
+              .catch(err => {
+                console.error('User denied account access', err);
+              });
+    } else {
+      console.log('MetaMask is not installed. Please consider installing it.');
+      connectMetamaskBtn.textContent = 'Please install MetaMask';
     }
+  });
 
+  const connectContractBtn = document.getElementById('connectContractBtn');
+  connectContractBtn.addEventListener('click', () => {
+    if (typeof Web3 !== 'undefined') {
+      const web3 = new Web3(window.ethereum);
+      const address = "0x2b328Aa1e7b95Ca0db3A1509b56c8f0bf5d039b8";
+      const ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"actualNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getMaxNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getWins","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_guessedNumber","type":"uint256"}],"name":"guess","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"newGame","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumber","type":"uint256"}],"name":"setMaxNumber","outputs":[],"stateMutability":"nonpayable","type":"function"}];
+      const contract = new web3.eth.Contract(ABI, address);
+      contract.methods.getMaxNumber().call()
+              .then(result => {
+                console.log("Max number: ", result);
+                document.getElementById("contractArea").innerHTML = "Max number: " + result;
+              })
+              .catch(error => {
+                console.error("An error occurred: ", error);
+              });
+    } else {
+      console.log('Web3 is not found. Please install MetaMask or another web3 provider.');
+    }
+  });
+
+  const guessBth = document.getElementById('guessBtn');
+  guessBth.addEventListener('click', () => {
+    let guessNumberInput = document.getElementById('guessNumber');
+    let guessNumber = guessNumberInput.value;
+    if(guessNumber == ""){
+      guessNumberInput.classList.add('red');
+      guessNumberInput.focus();
+      return;
+    }
+  });
+
+  const newGameBtn = document.getElementById('newGameBtn');
+  newGameBtn.addEventListener('click', () => {
+    console.log("newGameBtn");
+  });
+
+  const setMaxNumberBtn = document.getElementById('setMaxNumberBtn');
+  setMaxNumberBtn.addEventListener('click', () => {
+    console.log("setMaxNumber");
+  });
+
+  let inputs = document.getElementsByClassName('input');
+  function clearInputs() {
+    Array.from(inputs).forEach(function(input) {
+      input.classList.remove('red');
+    });
+  }
+
+</script>
+<script>
+  /*
+  window.addEventListener('load', async () => {
+    if (typeof ethereum === 'undefined') {
+      console.log('ethereum undefined.');
+      return;
+  }
+  let account;
+  const connectMetamask = async () => {
+          const accounts = await ethereum.request({ method: "eth_requestAccounts"});
+          account = accounts[0];
+          document.getElementById("accountArea").innerHTML = account;
+  }
+
+  let contract;
+  const connectContract = async () => {
     const address = "0x2b328Aa1e7b95Ca0db3A1509b56c8f0bf5d039b8";
     const ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"actualNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getMaxNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getWins","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_guessedNumber","type":"uint256"}],"name":"guess","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"newGame","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumber","type":"uint256"}],"name":"setMaxNumber","outputs":[],"stateMutability":"nonpayable","type":"function"}];
-    let contract;
-    if (!contract){
-      contract = new web3.eth.Contract(ABI, address);
-    }
+    const provider = new ethers.providers.Web3Provider(window.etereum);//@10:48
+    const signer = provider.getSigner();
+    contract = new ethers.Contract(address, ABI, signer);
+    document.getElementById("contractArea").innerHTML = contract.address;
+  }
 
-    const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
-    connectMetamaskBtn.addEventListener('click', () => {
-        if (typeof window.ethereum !== 'undefined') {
-            console.log('MetaMask is installed!');
-            window.ethereum.request({ method: 'eth_requestAccounts' })
-                .then(accounts => {
-                    console.log('Connected', accounts[0]);
-                    connectMetamaskBtn.textContent = 'Connected';
-                })
-                .catch(err => {
-                    console.error('User denied account access', err);
-                });
-        } else {
-            console.log('MetaMask is not installed. Please consider installing it.');
-            connectMetamaskBtn.textContent = 'Please install MetaMask';
-        }
-    });
-  
-    const connectContractBtn = document.getElementById('connectContractBtn');
-    connectContractBtn.addEventListener('click', () => {
-        if (typeof Web3 !== 'undefined') {
-          //web3 = new Web3(window.ethereum);
-          //
-          contract.methods.getMaxNumber().call()
-            .then(result => {
-              console.log("Max number: ", result);
-              document.getElementById("contractArea").innerHTML = "Max number: " + result;
-            })
-            .catch(error => {
-              console.error("An error occurred: ", error);
-            });
-        } else {
-          console.log('Web3 is not found. Please install MetaMask or another web3 provider.');
-        }
-      });
-
-    const guessBtn = document.getElementById('guessBtn');
-    guessBtn.addEventListener('click', () => {
-      let guessNumberInput = document.getElementById('guessNumber');
-      let guessNumber = guessNumberInput.value;
-      if(guessNumber == ""){
-        guessNumberInput.classList.add('red');
-        guessNumberInput.focus();
-        return;
-      }
-    });
-
-    const newGameBtn = document.getElementById('newGameBtn');
-    newGameBtn.addEventListener('click', () => {
-      console.log("newGameBtn");
-    });
-
-    const setMaxNumberBtn = document.getElementById('setMaxNumberBtn');
-    setMaxNumberBtn.addEventListener('click', () => {
-      console.log("setMaxNumber");
-    });
-
-    let inputs = document.getElementsByClassName('input');
-    function clearInputs() {
-      Array.from(inputs).forEach(function(input) {
-        input.classList.remove('red');
-      });
-    }
-
-  </script>
+  const readContract = async () => {
+      const data = await contractApple.getMaxNumber();
+      document.getElementById("readArea").innerHTML = myData;
+  }
+  });
+  */
+</script>
 </body>
 </html>
