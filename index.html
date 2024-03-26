@@ -29,6 +29,11 @@
   <div class="small txt">A demo by <a href="https://pigfox.com" target="_blank">Pigfox</a></div>
 </div>
   <script>
+    const web3 = null;
+    const address = "0x2b328Aa1e7b95Ca0db3A1509b56c8f0bf5d039b8";
+    const ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"actualNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getMaxNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getWins","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_guessedNumber","type":"uint256"}],"name":"guess","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"newGame","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumber","type":"uint256"}],"name":"setMaxNumber","outputs":[],"stateMutability":"nonpayable","type":"function"}];
+    const contract = new web3.eth.Contract(ABI, address);
+
     const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
     connectMetamaskBtn.addEventListener('click', () => {
         if (typeof window.ethereum !== 'undefined') {
@@ -50,10 +55,7 @@
     const connectContractBtn = document.getElementById('connectContractBtn');
     connectContractBtn.addEventListener('click', () => {
         if (typeof Web3 !== 'undefined') {
-          const web3 = new Web3(window.ethereum);
-          const address = "0x2b328Aa1e7b95Ca0db3A1509b56c8f0bf5d039b8";
-          const ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"actualNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getMaxNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getWins","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_guessedNumber","type":"uint256"}],"name":"guess","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"newGame","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumber","type":"uint256"}],"name":"setMaxNumber","outputs":[],"stateMutability":"nonpayable","type":"function"}];
-          const contract = new web3.eth.Contract(ABI, address);
+          let web3 = new Web3(window.ethereum);
           contract.methods.getMaxNumber().call()
             .then(result => {
               console.log("Max number: ", result);
