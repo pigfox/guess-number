@@ -17,12 +17,14 @@
   <div id="accountArea"></div>
   <div><button id="connectContractBtn" class="btn shape">Connect Contract</button></div>
   <div id="contractArea" class="txt"></div>
-  <div><button id="guessBtn" class="btn shape">Guess</button>
-    <input type="number" size="4" id="randomNumber" class="shape nums" placeholder="Random num"/>
+  <div>
+    <button id="guessBtn" class="btn shape">Guess</button>
+    <input type="number" size="4" id="guessNumber" class="shape nums" placeholder="Random num"/>
   </div>
-  <div><button onclick="newGame()" class="btn shape">New Game</button></div>
-  <div><button onclick="setMaxNumber()" class="btn shape">Set Max Number</button> 
-        <input type="number" size="4" id="maxNumber" class="shape nums" placeholder="Max num"/>
+  <div><button class="btn shape">New Game</button></div>
+  <div>
+    <button class="btn shape">Set Max Number</button>
+    <input type="number" size="4" id="maxNumber" class="shape nums" placeholder="Max num"/>
   </div>
   <div class="small txt">A demo by <a href="https://pigfox.com" target="_blank">Pigfox</a></div>
 </div>
@@ -31,16 +33,12 @@
     connectMetamaskBtn.addEventListener('click', () => {
         if (typeof window.ethereum !== 'undefined') {
             console.log('MetaMask is installed!');
-
-            // Request account access
             window.ethereum.request({ method: 'eth_requestAccounts' })
                 .then(accounts => {
-                    // Account access granted
                     console.log('Connected', accounts[0]);
                     connectMetamaskBtn.textContent = 'Connected';
                 })
                 .catch(err => {
-                    // User denied account access
                     console.error('User denied account access', err);
                 });
         } else {
@@ -51,32 +49,29 @@
   
     const connectContractBtn = document.getElementById('connectContractBtn');
     connectContractBtn.addEventListener('click', () => {
-  // Make sure Web3 is available
-  if (typeof Web3 !== 'undefined') {
-    // Use Web3 provided by MetaMask or other Ethereum wallet
-    const web3 = new Web3(window.ethereum);
-
-    // Contract details
-    const address = "0x2b328Aa1e7b95Ca0db3A1509b56c8f0bf5d039b8";
-    const ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"actualNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getMaxNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getWins","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_guessedNumber","type":"uint256"}],"name":"guess","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"newGame","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumber","type":"uint256"}],"name":"setMaxNumber","outputs":[],"stateMutability":"nonpayable","type":"function"}];
-    
-    // Create the contract instance
-    const contract = new web3.eth.Contract(ABI, address);
-    
-    // Example of how to use the contract to call a method
-    contract.methods.getMaxNumber().call()
-      .then(result => {
-        console.log("Max number: ", result);
-        document.getElementById("contractArea").innerHTML = "Max number: " + result;
-      })
-      .catch(error => {
-        console.error("An error occurred: ", error);
+        if (typeof Web3 !== 'undefined') {
+          const web3 = new Web3(window.ethereum);
+          const address = "0x2b328Aa1e7b95Ca0db3A1509b56c8f0bf5d039b8";
+          const ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"actualNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getMaxNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getWins","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_guessedNumber","type":"uint256"}],"name":"guess","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"newGame","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumber","type":"uint256"}],"name":"setMaxNumber","outputs":[],"stateMutability":"nonpayable","type":"function"}];
+          const contract = new web3.eth.Contract(ABI, address);
+          contract.methods.getMaxNumber().call()
+            .then(result => {
+              console.log("Max number: ", result);
+              document.getElementById("contractArea").innerHTML = "Max number: " + result;
+            })
+            .catch(error => {
+              console.error("An error occurred: ", error);
+            });
+        } else {
+          console.log('Web3 is not found. Please install MetaMask or another web3 provider.');
+        }
       });
-  } else {
-    console.log('Web3 is not found. Please install MetaMask or another web3 provider.');
-  }
-});
 
+    const guessBth = document.getElementById('guessBtn');
+    guessBth.addEventListener('click', () => {
+      let guessNumber = document.getElementById('guessNumber').value;
+      alert(guessNumber);
+    });
   </script>
     <script>
   /*
