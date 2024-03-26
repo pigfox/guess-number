@@ -24,31 +24,32 @@
   <div class="small">A demo by <a href="https://pigfox.com" target="_blank">Pigfox</a></div>
 </div>
   <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
-    <script>
-        const connectButton = document.getElementById('connectButton');
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
+  <script>
+      const connectButton = document.getElementById('connectButton');
 
-        connectButton.addEventListener('click', () => {
-            // Check if MetaMask is installed
-            if (typeof window.ethereum !== 'undefined') {
-                console.log('MetaMask is installed!');
+      connectButton.addEventListener('click', () => {
+          // Check if MetaMask is installed
+          if (typeof window.ethereum !== 'undefined') {
+              console.log('MetaMask is installed!');
 
-                // Request account access
-                window.ethereum.request({ method: 'eth_requestAccounts' })
-                    .then(accounts => {
-                        // Account access granted
-                        console.log('Connected', accounts[0]);
-                        connectButton.textContent = 'Connected';
-                    })
-                    .catch(err => {
-                        // User denied account access
-                        console.error('User denied account access', err);
-                    });
-            } else {
-                console.log('MetaMask is not installed. Please consider installing it.');
-                connectButton.textContent = 'Please install MetaMask';
-            }
-        });
-    </script>
+              // Request account access
+              window.ethereum.request({ method: 'eth_requestAccounts' })
+                  .then(accounts => {
+                      // Account access granted
+                      console.log('Connected', accounts[0]);
+                      connectButton.textContent = 'Connected';
+                  })
+                  .catch(err => {
+                      // User denied account access
+                      console.error('User denied account access', err);
+                  });
+          } else {
+              console.log('MetaMask is not installed. Please consider installing it.');
+              connectButton.textContent = 'Please install MetaMask';
+          }
+      });
+  </script>
     <script>
   /*
   window.addEventListener('load', async () => {
