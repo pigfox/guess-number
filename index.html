@@ -24,7 +24,7 @@
   <div><button class="btn shape" id="newGameBtn">New Game</button></div>
   <div>
     <button class="btn shape" id="setMaxNumberBtn">Set Max Number</button>
-    <input type="number" size="4" id="maxNumber" class="shape nums input" placeholder="Max num" onblur="clear()"/>
+    <input type="number" size="4" id="maxNumber" class="shape nums input" placeholder="Max num" onblur="clearInputs()"/>
   </div>
   <div class="small txt">A demo by <a href="https://pigfox.com" target="_blank">Pigfox</a></div>
 </div>
@@ -78,14 +78,14 @@
         return;
       }
     });
-/*
+
     let inputs = document.getElementsByClassName('input');
-    function clear() {
+    function clearInputs() {
       Array.from(inputs).forEach(function(input) {
         input.style.backgroundColor = 'black';
       });
     }
-    */
+
   </script>
     <script>
   /*
