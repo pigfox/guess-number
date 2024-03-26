@@ -69,7 +69,9 @@
 
     const guessBth = document.getElementById('guessBtn');
     guessBth.addEventListener('click', () => {
-      let guessNumber = document.getElementById('guessNumber').value;
+      let guessNumberInput = document.getElementById('guessNumber');
+      let guessNumber = guessNumberInput.value;
+      alert(guessNumber);
       if(guessNumber == ""){
         guessNumber.classList.add('red');
         guessNumber.focus();
