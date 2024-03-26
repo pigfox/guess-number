@@ -80,9 +80,8 @@
 
     let inputs = document.getElementsByClassName('input');
     function clearInputs() {
-      alert(83);
       Array.from(inputs).forEach(function(input) {
-        input.style.border = 'black';
+        input.classList.remove('red');
       });
     }
 
