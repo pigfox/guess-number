@@ -71,7 +71,6 @@
     guessBth.addEventListener('click', () => {
       let guessNumberInput = document.getElementById('guessNumber');
       let guessNumber = guessNumberInput.value;
-      alert(guessNumber);
       if(guessNumber == ""){
         guessNumberInput.classList.add('red');
         guessNumberInput.focus();
@@ -81,6 +80,7 @@
 
     let inputs = document.getElementsByClassName('input');
     function clearInputs() {
+      alert(83);
       Array.from(inputs).forEach(function(input) {
         input.style.backgroundColor = 'black';
       });
