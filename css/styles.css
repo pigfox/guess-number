@@ -66,3 +66,7 @@ body {
   .nums{
     width: 4em;
   }
+
+  .red{
+    border: 1px solid red;
+  }
