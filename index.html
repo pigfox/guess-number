@@ -78,6 +78,16 @@
       }
     });
 
+    const newGameBtn = document.getElementById('newGameBtn');
+    newGameBtn.addEventListener('click', () => {
+      console.log("newGameBtn");
+    });
+
+    const setMaxNumberBtn = document.getElementById('setMaxNumberBtn');
+    setMaxNumberBtn.addEventListener('click', () => {
+      console.log("setMaxNumber");
+    });
+
     let inputs = document.getElementsByClassName('input');
     function clearInputs() {
       Array.from(inputs).forEach(function(input) {
