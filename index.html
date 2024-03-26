@@ -13,9 +13,9 @@
 <div class="content">
   <img src="./img/logo.png" alt="Logo" id="logo"/> 
   <h3>Guess a number on Sepolia</h3>
-  <div><button id="connectMetamask" class="btn shape">Connect Metamask</button></div>
+  <div><button id="connectMetamaskBtn" class="btn shape">Connect Metamask</button></div>
   <div id="accountArea"></div>
-  <div><button id="connectContract" class="btn shape">Connect Contract</button></div>
+  <div><button id="connectContractBtn" class="btn shape">Connect Contract</button></div>
   <div id="contractArea"></div>
   <div><button onclick="newGame()" class="btn shape">New Game</button></div>
   <div><button onclick="setMaxNumber()" class="btn shape">Set Max Number</button></div>
@@ -26,9 +26,9 @@
   <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
   <script>
-    const connectMetamask = document.getElementById('connectMetamask');
+    const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
 
-    connectMetamask.addEventListener('click', () => {
+    connectMetamaskBtn.addEventListener('click', () => {
         if (typeof window.ethereum !== 'undefined') {
             console.log('MetaMask is installed!');
 
@@ -37,7 +37,7 @@
                 .then(accounts => {
                     // Account access granted
                     console.log('Connected', accounts[0]);
-                    connectButton.textContent = 'Connected';
+                    connectMetamaskBtn.textContent = 'Connected';
                 })
                 .catch(err => {
                     // User denied account access
@@ -45,7 +45,7 @@
                 });
         } else {
             console.log('MetaMask is not installed. Please consider installing it.');
-            connectButton.textContent = 'Please install MetaMask';
+            connectMetamaskBtn.textContent = 'Please install MetaMask';
         }
     });
   </script>
