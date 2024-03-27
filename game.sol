@@ -8,6 +8,9 @@ contract GuessNumber {
     uint public actualNumber;
     uint private maxNumber;
     mapping(address => uint) private wins;
+    mapping(address => bool) private addressExists;
+    address[] private players;
+    event NumberGuessed(address indexed guesser, uint guessedNumber, bool isCorrect);
 
     constructor() {
         owner = msg.sender;
@@ -16,12 +19,18 @@ contract GuessNumber {
     }
 
     function guess(uint _guessedNumber) public returns (bool) {
-        if (actualNumber == _guessedNumber) {
+        bool isCorrect = actualNumber == _guessedNumber;
+        if(!addressExists[msg.sender])   {
+            players.push(msg.sender);
+        }
+
+        if (isCorrect) {
             newGame();
             wins[msg.sender]++;
-            return true;
         }
-        return false;
+
+        emit NumberGuessed(msg.sender, _guessedNumber, isCorrect);
+        return isCorrect;
     }
 
     function newGame() public {
@@ -37,7 +46,7 @@ contract GuessNumber {
         return maxNumber;
     }
 
-    function getWins() public view returns (uint) {
+    function getNumWins() public view returns (uint) {
         return wins[msg.sender];
     }
 
