@@ -64,7 +64,7 @@ html, body {
   }
 
   .small{
-    color:blue;
+    color:white;
     font-size:10px;
   }
 
@@ -75,3 +75,27 @@ html, body {
   .red{
     border: 1px solid red;
   }
+
+a:link {
+  color:white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:visited {
+  color:white;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color:white;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a:active {
+  color:white;;
+  background-color: transparent;
+  text-decoration: none;
+}
