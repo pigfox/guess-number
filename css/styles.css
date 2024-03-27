@@ -3,6 +3,8 @@ html, body {
     padding: 0;
     font-family: Arial, sans-serif;
     background-image: url('../img/bamboo.jpg');
+    background-repeat: no-repeat;
+    color: #ffffff;
   }
 
   #logo{
