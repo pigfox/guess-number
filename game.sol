@@ -35,7 +35,6 @@ contract GuessNumber {
 
     function newGame() public returns (bool){
         actualNumber = generateRandomNumber();
-
         return true;
     }
 
