@@ -37,7 +37,7 @@
     console.log("web3 variable is defined and" + " value is " + web3);
   }
 
-  //const web3 = new Web3(window.ethereum);//<-- when I uncomment this lien I get:
+  const web3 = new Web3(window.ethereum);//<-- when I uncomment this line I get: despite above web3 is undefined
 
   const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
   connectMetamaskBtn.addEventListener('click', () => {
