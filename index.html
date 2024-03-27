@@ -58,9 +58,9 @@
   const connectContractBtn = document.getElementById('connectContractBtn');
   connectContractBtn.addEventListener('click', () => {
     if (typeof Web3 !== 'undefined') {
-      contract.methods.getNumWins().call()
+      contract.methods.getMaxNumber().call()//getNumWins()
         .then(result => {
-          document.getElementById("contractAddress").innerHTML = "Connected to: " + address;
+          document.getElementById("contractAddress").innerHTML = "Contract: " + address;
           console.log("My wins: ", result);
           document.getElementById("myWins").innerHTML = "My wins: " + result;
         })
