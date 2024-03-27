@@ -49,16 +49,6 @@
           .catch(err => {
           console.error('User denied account access', err);
         });
-
-        contract.methods.getNumWins().call()
-          .then(result => {
-            document.getElementById("contractAddress").innerHTML = "Connected to: " + address;
-            console.log("My wins: ", result);
-            document.getElementById("myWins").innerHTML = "My wins: " + result;
-          })
-          .catch(error => {
-            console.error("An error occurred: ", error);
-          });
       } else {
         console.log('MetaMask is not installed. Please consider installing it.');
         connectMetamaskBtn.textContent = 'Please install MetaMask';
@@ -68,6 +58,16 @@
   const connectContractBtn = document.getElementById('connectContractBtn');
   connectContractBtn.addEventListener('click', () => {
     if (typeof Web3 !== 'undefined') {
+      contract.methods.getNumWins().call()
+        .then(result => {
+          document.getElementById("contractAddress").innerHTML = "Connected to: " + address;
+          console.log("My wins: ", result);
+          document.getElementById("myWins").innerHTML = "My wins: " + result;
+        })
+        .catch(error => {
+          console.error("An error occurred: ", error);
+        });
+
       contract.methods.getMaxNumber().call()
         .then(result => {
           console.log("Max number: ", result);
