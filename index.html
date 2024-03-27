@@ -32,12 +32,13 @@
 <script>
   if (typeof web3 === 'undefined') {
     console.log("web3 is undefined"); //prints-->web3 is undefined
-  }
-  else {
+  } else {
     console.log("web3 variable is defined and" + " value is " + web3);
   }
 
   const web3 = new Web3(window.ethereum);//<-- when I uncomment this line I get: despite above web3 is undefined
+  //(index):32 Uncaught SyntaxError: Identifier 'web3' has already been declared (at (index):32:9)
+
 
   const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
   connectMetamaskBtn.addEventListener('click', () => {
