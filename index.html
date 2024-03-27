@@ -39,13 +39,22 @@
       if (typeof window.ethereum !== 'undefined') {
         console.log('MetaMask is installed!');
         window.ethereum.request({ method: 'eth_requestAccounts' })
-                .then(accounts => {
-                  console.log('Connected', accounts[0]);
-                  connectMetamaskBtn.textContent = 'Connected';
-                })
-                .catch(err => {
-                  console.error('User denied account access', err);
-                });
+          .then(accounts => {
+          console.log('Connected', accounts[0]);
+          connectMetamaskBtn.textContent = 'Connected';
+        })
+          .catch(err => {
+          console.error('User denied account access', err);
+        });
+
+        contract.methods.getNumWins().call()
+          .then(result => {
+            console.log("My wins: ", result);
+            document.getElementById("myWins").innerHTML = "My wins: " + result;
+          })
+          .catch(error => {
+            console.error("An error occurred: ", error);
+          });
       } else {
         console.log('MetaMask is not installed. Please consider installing it.');
         connectMetamaskBtn.textContent = 'Please install MetaMask';
@@ -55,14 +64,6 @@
   const connectContractBtn = document.getElementById('connectContractBtn');
   connectContractBtn.addEventListener('click', () => {
     if (typeof Web3 !== 'undefined') {
-      contract.methods.getNumWins().call()
-              .then(result => {
-                console.log("My wins: ", result);
-                document.getElementById("myWins").innerHTML = "My wins: " + result;
-              })
-              .catch(error => {
-                console.error("An error occurred: ", error);
-              });
       contract.methods.getMaxNumber().call()
         .then(result => {
           console.log("Max number: ", result);
