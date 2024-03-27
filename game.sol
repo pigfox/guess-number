@@ -4,7 +4,6 @@ pragma solidity 0.8.18;
 
 contract GuessNumber {
     address private owner;
-    uint private guessedNumber;
     uint public actualNumber;
     uint private maxNumber;
     mapping(address => uint) private wins;
@@ -25,7 +24,7 @@ contract GuessNumber {
         }
 
         if (isCorrect) {
-            newGame();
+            this.newGame();
             wins[msg.sender]++;
         }
 
@@ -56,5 +55,15 @@ contract GuessNumber {
             keccak256(abi.encodePacked(block.timestamp, msg.sender))
         );
         return uint(randomHash % maxNumber);
+    }
+
+    //debug fctns
+
+    function thisAddress()public view returns(address){
+        return address(this);
+    }
+
+    function getSender() public view returns(address){
+        return msg.sender;
     }
 }
