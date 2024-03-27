@@ -33,12 +33,14 @@ contract GuessNumber {
         return isCorrect;
     }
 
-    function newGame() public {
+    function newGame() public returns (bool){
         actualNumber = generateRandomNumber();
+
+        return true;
     }
 
     function setMaxNumber(uint _maxNumber) public {
-        require(0 < _maxNumber, "Max number must be greater thatn zero");
+        require(0 < _maxNumber, "Max number must be greater than zero");
         maxNumber = _maxNumber;
     }
 
