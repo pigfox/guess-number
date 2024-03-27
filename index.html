@@ -79,23 +79,40 @@ const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
       return;
     }
     contract.methods.guess(guessNumber).send({ from: ethereum.selectedAddress })
-    .then(receipt => {
-      console.log("Transaction receipt: ", receipt);
-    })
-    .catch(err => {
-      console.error("Transaction error: ", err);
-    });
-
+      .then(receipt => {
+        console.log("Transaction receipt: ", receipt);
+      })
+      .catch(err => {
+        console.error("Transaction error: ", err);
+      });
+      guessNumberInput.value = "";
   });
 
   const newGameBtn = document.getElementById('newGameBtn');
   newGameBtn.addEventListener('click', () => {
     console.log("newGameBtn");
+    contract.methods.newGame().send({ from: ethereum.selectedAddress });
   });
 
   const setMaxNumberBtn = document.getElementById('setMaxNumberBtn');
   setMaxNumberBtn.addEventListener('click', () => {
     console.log("setMaxNumber");
+    let maxNumberInput = document.getElementById('maxNumber');
+    let maxNumber = maxNumberInput.value;
+    if(maxNumber == ""){
+      maxNumberInput.classList.add('red');
+      maxNumberInput.focus();
+      return;
+    }
+
+    contract.methods.setMaxNumber(maxNumber).send({ from: ethereum.selectedAddress })
+      .then(receipt => {
+        console.log("Transaction receipt: ", receipt);
+      })
+      .catch(err => {
+        console.error("Transaction error: ", err);
+      });
+      maxNumberInput.value = "";
   });
 
   let inputs = document.getElementsByClassName('input');
