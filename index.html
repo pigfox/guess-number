@@ -31,20 +31,20 @@
 </div>
 <script>
   if (typeof Web3 === 'undefined') {
-    console.log("Web3 is Undefined");
+    console.log("Web3 is undefined");
   }
   else {
-    console.log("Variable is defined and" + " value is " + Web3);
+    console.log("Web3 variable is defined and" + " value is " + Web3);
   }
 
   if (typeof web3 === 'undefined') {
-    console.log("web3 is Undefined");
+    console.log("web3 is undefined");
   }
   else {
-    console.log("Variable is defined and" + " value is " + web3);
+    console.log("web3 variable is defined and" + " value is " + web3);
   }
 
-  //const web3 = new Web3(window.ethereum);
+  //const web3 = new Web3(window.ethereum);//<--
 
   const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
   connectMetamaskBtn.addEventListener('click', () => {
