@@ -12,6 +12,7 @@
 <div class="content">
   <img src="./img/logo.webp" alt="Logo" id="logo"/>
   <h3>Guess a number on Sepolia</h3>
+  <div id="myWins"></div>
   <div><button id="connectMetamaskBtn" class="btn shape">Connect Metamask</button></div>
   <div id="accountArea"></div>
   <div><button id="connectContractBtn" class="btn shape">Connect Contract</button></div>
@@ -54,14 +55,22 @@
   const connectContractBtn = document.getElementById('connectContractBtn');
   connectContractBtn.addEventListener('click', () => {
     if (typeof Web3 !== 'undefined') {
-      contract.methods.getMaxNumber().call()
+      contract.methods.getNumWins().call()
               .then(result => {
-                console.log("Max number: ", result);
-                document.getElementById("contractArea").innerHTML = "Max number: " + result;
+                console.log("My wins: ", result);
+                document.getElementById("myWins").innerHTML = "My wins: " + result;
               })
               .catch(error => {
                 console.error("An error occurred: ", error);
               });
+      contract.methods.getMaxNumber().call()
+        .then(result => {
+          console.log("Max number: ", result);
+          document.getElementById("contractArea").innerHTML = "Max number: " + result;
+        })
+        .catch(error => {
+          console.error("An error occurred: ", error);
+        });
     } else {
       console.log('Web3 is not found. Please install MetaMask or another web3 provider.');
     }
