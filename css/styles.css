@@ -41,7 +41,7 @@ html, body {
     cursor: pointer; /* Hand cursor on hover */
     transition: background-color 0.3s, transform 0.2s; /* Smooth transition for hover effects */
     outline: none; /* Removes the outline */
-    margin:5px;
+    margin:0px;
   }
   
   .btn:hover {
