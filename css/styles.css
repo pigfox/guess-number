@@ -30,10 +30,6 @@ html, body {
     color: white;
   }
 
-  .txt{
-    margin:5px;
-  }
-
   .shape{
     padding: 10px 10px; /* Padding around the text */
     border: 1px black solid; /* No border */
