@@ -16,7 +16,7 @@ html, body {
   }
  
   .content {
-    padding: 5px;
+    padding: 10px;
   }
   
   @media (max-width: 600px) {
@@ -41,7 +41,8 @@ html, body {
     cursor: pointer; /* Hand cursor on hover */
     transition: background-color 0.3s, transform 0.2s; /* Smooth transition for hover effects */
     outline: none; /* Removes the outline */
-    margin:0px;
+    margin-top:5px;
+    margin-bottom:5px;
   }
   
   .btn:hover {
