@@ -7,7 +7,6 @@
   <title>Guess A Number</title>
   <link rel="icon" href="/favicon.ico">
   <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
-  <script src="./js/index.js" ></script>
   <link rel="stylesheet" href="./css/styles.css"/>
 </head>
 <body>
@@ -30,15 +29,7 @@
   <div class="small txt">A demo by <a href="https://pigfox.com" target="_blank">Pigfox</a></div>
 </div>
 <script>//<- line 32
-  if (typeof web3 === 'undefined') {
-    console.log("web3 is undefined"); //prints-->web3 is undefined
-  } else {
-    console.log("web3 variable is defined and" + " value is " + web3);
-  }
-
-  //const web3 = new Web3(window.ethereum);//<-- when I uncomment this line I get: despite above web3 is undefined
-  //(index):32 Uncaught SyntaxError: Identifier 'web3' has already been declared (at (index):32:9)
-
+  const web3 = new Web3(window.ethereum);
 
   const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
   connectMetamaskBtn.addEventListener('click', () => {
