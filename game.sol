@@ -11,8 +11,9 @@ contract GuessNumber {
     mapping(address => uint) private wins;
     mapping(address => bool) private addressExists;
     address[] private players;
-    event NumberGuessed(address indexed guesser, uint guessedNumber, uint numGuesses, bool isCorrect);
-    event NewGame(address indexed performer, uint256 timestamp);
+    event NumberGuessed(address indexed player, uint guessedNumber, uint numGuesses, bool isCorrect);
+    event NewGame(address indexed player, uint256 timestamp);
+    event UpdatedMaxNumber(address indexed player, uint maxNumber, uint256 timestamp);
 
     constructor() {
         owner = msg.sender;
@@ -50,6 +51,7 @@ contract GuessNumber {
     function setMaxNumber(uint _maxNumber) public {
         require(0 < _maxNumber, "Max number must be greater than zero");
         maxNumber = _maxNumber;
+        emit UpdatedMaxNumber(player, maxNumber, block.timestamp);
     }
 
     function getMaxNumber() public view returns (uint) {

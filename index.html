@@ -12,9 +12,11 @@
 <div class="content">
   <a href="/"><img src="./img/logo.webp" alt="Logo" id="logo"/></a>
   <h3>Guess a number on Sepolia</h3>
+  <img src="./img/star.png" alt="Star"/>
   <div id="contractAddress"></div>
   <div id="myWins"></div>
   <div id="numGuesses"></div>
+  <div id="updatedMaxNumber"></div>
   <div><button id="connectMetamaskBtn" class="btn shape">Connect Metamask</button></div>
   <div id="accountArea"></div>
   <div><button id="connectContractBtn" class="btn shape">Connect Contract</button></div>
@@ -138,9 +140,13 @@
   contract.events.NumberGuessed()
     .on('data', function(event) {
       console.log('Num guessed event fired', event);
-      //countSpan.innerText = event.returnValues.newCount;
-      let s = "Attempt " + event.returnValues[2] +" was " + event.returnValues[3];
-      s+= " You guessed" + event.returnValues[1];
+      let s = "Attempt " + event.returnValues[2]+". You guessed " + event.returnValues[1];
+      if(event.returnValues[3]){//win
+        s+= ' and won! <img src="./img/star.png" alt="Star"/>';
+      }else{
+        s+=". try again.";
+      }
+
       document.getElementById("numGuesses").innerHTML = s;
     }).on('error', console.error);
 </script>
