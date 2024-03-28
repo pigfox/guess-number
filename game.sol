@@ -51,6 +51,7 @@ contract GuessNumber {
     function setMaxNumber(uint _maxNumber) public {
         require(0 < _maxNumber, "Max number must be greater than zero");
         maxNumber = _maxNumber;
+        actualNumber = generateRandomNumber();
         emit UpdatedMaxNumber(player, maxNumber, block.timestamp);
     }
 
