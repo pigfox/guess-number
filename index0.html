@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guess A Number</title>
+  <link rel="icon" href="/favicon.ico">
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
+  <link rel="stylesheet" href="./css/styles.css"/>
+</head>
+<body>
+<div class="content">
+  <a href="/"><img src="./img/logo.webp" alt="Logo" id="logo"/></a>
+  <h3>Guess a number on Sepolia</h3>
+  <div id="contractAddress"></div>
+  <div id="myWins"></div>
+  <div id="numGuesses"></div>
+  <div><button id="connectMetamaskBtn" class="btn shape">Connect Metamask</button></div>
+  <div id="accountArea"></div>
+  <div><button id="connectContractBtn" class="btn shape">Connect Contract</button></div>
+  <div id="contractArea" class="txt"></div>
+  <div>
+    <button id="guessBtn" class="btn shape">Guess</button>
+    <input type="number" size="4" id="guessNumber" class="shape nums input" placeholder="number" onblur="clearInputs()"/>
+  </div>
+  <div><button class="btn shape" id="newGameBtn">New Game</button></div>
+  <div>
+    <button class="btn shape" id="setMaxNumberBtn">Set Max Number</button>
+    <input type="number" size="4" id="maxNumber" class="shape nums input" placeholder="number" onblur="clearInputs()"/>
+  </div>
+  <div class="small">A demo by <a href="https://pigfox.com" target="_blank">Pigfox</a></div>
+</div>
+<script>
+  const web3 = new Web3(window.ethereum);
+  const address = "0xBbb3478e4944b569A4f32984C43e6B32c32fdE1E";
+  const ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"performer","type":"address"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NewGame","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"guesser","type":"address"},{"indexed":false,"internalType":"uint256","name":"guessedNumber","type":"uint256"},{"indexed":false,"internalType":"bool","name":"isCorrect","type":"bool"}],"name":"NumberGuessed","type":"event"},{"inputs":[],"name":"actualNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getMaxNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getNumGuesses","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getNumWins","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getSender","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_guessedNumber","type":"uint256"}],"name":"guess","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"newGame","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumber","type":"uint256"}],"name":"setMaxNumber","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"thisAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}];
+  const contract = new web3.eth.Contract(ABI, address);
+  let numGuesses = 0;
+
+  const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
+    connectMetamaskBtn.addEventListener('click', () => {
+      if (typeof window.ethereum !== 'undefined') {
+        console.log('MetaMask is installed!');
+        window.ethereum.request({ method: 'eth_requestAccounts' })
+          .then(accounts => {
+          console.log('Wallet connected', accounts[0]);
+          connectMetamaskBtn.textContent = 'Connected';
+        })
+          .catch(err => {
+          console.error('User denied account access', err);
+        });
+      } else {
+        console.log('MetaMask is not installed. Please consider installing it.');
+        connectMetamaskBtn.textContent = 'Please install MetaMask';
+      }
+    });
+
+  const connectContractBtn = document.getElementById('connectContractBtn');
+  connectContractBtn.addEventListener('click', () => {
+    if (typeof Web3 !== 'undefined') {
+      contract.methods.getNumWins().call()//getNumWins()
+        .then(result => {
+          document.getElementById("contractAddress").innerHTML = "Contract: " + address;
+          console.log("My wins: ", result);
+          document.getElementById("myWins").innerHTML = "My wins: " + result;
+        })
+        .catch(error => {
+          console.error("An error occurred: ", error);
+        });
+
+      contract.methods.getMaxNumber().call()
+        .then(result => {
+          console.log("Max number: ", result);
+          document.getElementById("contractArea").innerHTML = "Max number: " + result;
+        })
+        .catch(error => {
+          console.error("An error occurred: ", error);
+        });
+    } else {
+      console.log('Web3 is not found. Please install MetaMask or another web3 provider.');
+    }
+  });
+
+  const guessBth = document.getElementById('guessBtn');
+  guessBth.addEventListener('click', () => {
+    let guessNumberInput = document.getElementById('guessNumber');
+    let guessNumber = guessNumberInput.value;
+    if(guessNumber == ""){
+      guessNumberInput.classList.add('red');
+      guessNumberInput.focus();
+      return;
+    }
+    contract.methods.guess(guessNumber).send({ from: ethereum.selectedAddress })
+      .then(receipt => {
+        console.log("Transaction receipt: ", receipt);
+      })
+      .catch(err => {
+        console.error("Transaction error: ", err);
+      });
+
+      numGuesses++;
+      document.getElementById("numGuesses").innerHTML = "Guess attempts: " + numGuesses;
+      guessNumberInput.value = "";
+  });
+
+  const newGameBtn = document.getElementById('newGameBtn');
+  newGameBtn.addEventListener('click', () => {
+    console.log("newGameBtn");
+    contract.methods.newGame().send({ from: ethereum.selectedAddress });
+  });
+
+  const setMaxNumberBtn = document.getElementById('setMaxNumberBtn');
+  setMaxNumberBtn.addEventListener('click', () => {
+    console.log("setMaxNumber");
+    let maxNumberInput = document.getElementById('maxNumber');
+    let maxNumber = maxNumberInput.value;
+    if(maxNumber == ""){
+      maxNumberInput.classList.add('red');
+      maxNumberInput.focus();
+      return;
+    }
+
+    contract.methods.setMaxNumber(maxNumber).send({ from: ethereum.selectedAddress })
+      .then(receipt => {
+        console.log("Transaction receipt: ", receipt);
+      })
+      .catch(err => {
+        console.error("Transaction error: ", err);
+      });
+      maxNumberInput.value = "";
+  });
+
+  let inputs = document.getElementsByClassName('input');
+  function clearInputs() {
+    Array.from(inputs).forEach(function(input) {
+      input.classList.remove('red');
+    });
+  }
+</script>
+</body>
+</html>
