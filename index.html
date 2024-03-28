@@ -98,8 +98,6 @@
         console.error("Transaction error: ", err);
       });
 
-      numGuesses++;
-      document.getElementById("numGuesses").innerHTML = "Guess attempts: " + numGuesses;
       guessNumberInput.value = "";
   });
 
@@ -136,6 +134,14 @@
       input.classList.remove('red');
     });
   }
+
+  // Subscribe to the NumberGuessed() event
+  contract.events.NumberGuessed()
+    .on('data', function(event) {
+      console.log('Num guessed event fired', event);
+      //countSpan.innerText = event.returnValues.newCount;
+      document.getElementById("numGuesses").innerHTML = "Guess attempts: " + numGuesses;
+    }).on('error', console.error);
 </script>
 </body>
 </html>

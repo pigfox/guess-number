@@ -11,7 +11,7 @@ contract GuessNumber {
     mapping(address => uint) private wins;
     mapping(address => bool) private addressExists;
     address[] private players;
-    event NumberGuessed(address indexed guesser, uint guessedNumber, bool isCorrect);
+    event NumberGuessed(address indexed guesser, uint guessedNumber, uint numGuesses, bool isCorrect);
     event NewGame(address indexed performer, uint256 timestamp);
 
     constructor() {
@@ -30,7 +30,7 @@ contract GuessNumber {
             wins[player]++;
         }
         numGuesses++;
-        emit NumberGuessed(player, _guessedNumber, isCorrect);
+        emit NumberGuessed(player, _guessedNumber, numGuesses, isCorrect);
         return isCorrect;
     }
 
