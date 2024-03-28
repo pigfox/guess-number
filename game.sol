@@ -4,6 +4,7 @@ pragma solidity 0.8.18;
 
 contract GuessNumber {
     address private owner;
+    address private player;
     uint public actualNumber;
     uint private maxNumber;
     uint private numGuesses;
@@ -21,23 +22,24 @@ contract GuessNumber {
     function guess(uint _guessedNumber) public returns (bool) {
         bool isCorrect = actualNumber == _guessedNumber;
         if(!addressExists[msg.sender])   {
-            players.push(msg.sender);
+            players.push(player);
         }
 
         if (isCorrect) {
             this.newGame();
-            wins[msg.sender]++;
+            wins[player]++;
         }
         numGuesses++;
-        emit NumberGuessed(msg.sender, _guessedNumber, isCorrect);
+        emit NumberGuessed(player, _guessedNumber, isCorrect);
         return isCorrect;
     }
 
     function newGame() public returns (bool){
+        player = msg.sender;
         maxNumber = 10; // Default value to ensure it's > 0
         numGuesses = 0;
         actualNumber = generateRandomNumber();
-        emit NewGame(msg.sender, block.timestamp);
+        emit NewGame(player, block.timestamp);
         return true;
     }
 
@@ -54,15 +56,14 @@ contract GuessNumber {
         return maxNumber;
     }
 
-    function getNumWins() public pure returns (uint) {//view
-        //return wins[msg.sender];
-        return 666;
+    function getNumWins() public view returns (uint) {
+        return wins[player];
     }
 
     function generateRandomNumber() private view returns (uint) {
         require(0 < maxNumber, "Max number must be greater than zero");
         uint randomHash = uint(
-            keccak256(abi.encodePacked(block.timestamp, msg.sender))
+            keccak256(abi.encodePacked(block.timestamp, player))
         );
         return uint(randomHash % maxNumber);
     }
