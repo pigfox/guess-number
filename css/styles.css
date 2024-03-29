@@ -106,6 +106,8 @@ a:active {
   color: black;
   text-align: center;
   width: 100px;
-  position: relative;
+  position: absolute;
+  left: 0px;
+  top: 0px;
   z-index: 2;
 }
