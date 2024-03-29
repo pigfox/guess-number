@@ -41,6 +41,7 @@
 
   const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
     connectMetamaskBtn.addEventListener('click', () => {
+      uiStart();
       if (typeof window.ethereum !== 'undefined') {
         console.log('MetaMask is installed!');
         window.ethereum.request({ method: 'eth_requestAccounts' })
@@ -55,10 +56,12 @@
         console.log('MetaMask is not installed. Please consider installing it.');
         connectMetamaskBtn.textContent = 'Please install MetaMask';
       }
+      uiEnd();
     });
 
   const connectContractBtn = document.getElementById('connectContractBtn');
   connectContractBtn.addEventListener('click', () => {
+    uiStart();
     if (typeof Web3 !== 'undefined') {
       contract.methods.getNumWins().call()//getNumWins()
         .then(result => {
@@ -81,10 +84,12 @@
     } else {
       console.log('Web3 is not found. Please install MetaMask or another web3 provider.');
     }
+    uiEnd();
   });
 
   const guessBth = document.getElementById('guessBtn');
   guessBth.addEventListener('click', () => {
+    uiStart();
     let guessNumberInput = document.getElementById('guessNumber');
     let guessNumber = guessNumberInput.value;
     if(guessNumber == ""){
@@ -101,10 +106,12 @@
       });
 
       guessNumberInput.value = "";
+      uiEnd();
   });
 
   const newGameBtn = document.getElementById('newGameBtn');
   newGameBtn.addEventListener('click', () => {
+    uiStart();
     console.log("newGameBtn");
     contract.methods.newGame().send({ from: ethereum.selectedAddress });
     document.getElementById("numGuesses").innerHTML = "";
@@ -114,10 +121,12 @@
               let s = "Max number: " + event.returnValues[1];
               document.getElementById("viewNumber").innerHTML = s;
             }).on('error', console.error);
+    uiEnd();
   });
 
   const setMaxNumberBtn = document.getElementById('setMaxNumberBtn');
   setMaxNumberBtn.addEventListener('click', () => {
+    uiStart();
     console.log("setMaxNumber");
     let maxNumberInput = document.getElementById('maxNumber');
     let maxNumber = maxNumberInput.value;
@@ -135,6 +144,7 @@
         console.error("Transaction error: ", err);
       });
       maxNumberInput.value = "";
+      uiEnd();
   });
 
   let inputs = document.getElementsByClassName('input');
@@ -174,6 +184,16 @@
       let s = "Updated max number: " + event.returnValues[1];
       document.getElementById("viewNumber").innerHTML = s;
     }).on('error', console.error);
+
+  function uiStart(){
+    document.getElementById("progessbar").style.display = "block";
+    document.getElementById("controls").style.display = "none";
+  }
+
+  function uiEnd(){
+    document.getElementById("progessbar").style.display = "none";
+    document.getElementById("controls").style.display = "block";
+  }
 </script>
 <script>
   let sequence = "00000000"; // Start with a base sequence
