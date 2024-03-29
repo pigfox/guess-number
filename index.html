@@ -17,18 +17,20 @@
   <div id="myWins"></div>
   <div id="numGuesses"></div>
   <div id="viewNumber"></div>
-  <div><button id="connectMetamaskBtn" class="btn shape">Connect Metamask</button></div>
-  <div id="accountArea"></div>
-  <div><button id="connectContractBtn" class="btn shape">Connect Contract</button></div>
-  <div>
-    <button id="guessBtn" class="btn shape">Guess</button>
-    <input type="number" size="4" id="guessNumber" class="shape nums input" placeholder="number" onblur="clearInputs()"/>
-  </div>
-  <div><button class="btn shape" id="newGameBtn">New Game</button></div>
-  <div>
-    <button class="btn shape" id="setMaxNumberBtn">Set Max Number</button>
-    <input type="number" size="4" id="maxNumber" class="shape nums input" placeholder="number" onblur="clearInputs()"/>
-  </div>
+  <div id="controls">
+    <div><button id="connectMetamaskBtn" class="btn shape">Connect Metamask</button></div>
+    <div id="accountArea"></div>
+    <div><button id="connectContractBtn" class="btn shape">Connect Contract</button></div>
+    <div>
+      <button id="guessBtn" class="btn shape">Guess</button>
+      <input type="number" size="4" id="guessNumber" class="shape nums input" placeholder="number" onblur="clearInputs()"/>
+    </div>
+    <div><button class="btn shape" id="newGameBtn">New Game</button></div>
+    <div>
+      <button class="btn shape" id="setMaxNumberBtn">Set Max Number</button>
+      <input type="number" size="4" id="maxNumber" class="shape nums input" placeholder="number" onblur="clearInputs()"/>
+    </div>
+  </div><!-- id="controls" -->
   <div class="small">A demo by <a href="https://pigfox.com" target="_blank">Pigfox</a></div>
 </div>
 <script>
