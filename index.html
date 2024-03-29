@@ -183,11 +183,24 @@
     // Determine the next character (alternate)
     lastChar = lastChar === '0' ? '1' : '0';
 
-    // Append the new character and ensure the sequence is 8 characters long
-    sequence = (sequence + lastChar).substring(sequence.length > 7 ? 1 : 0);
+    // Check if the sequence is 8 characters long
+    if (sequence.length >= 8) {
+      // Clear the sequence and display
+      sequence = "";
+      document.getElementById("progressbar").textContent = sequence;
 
-    // Update the div's content with the new sequence
-    document.getElementById("progressbar").textContent = sequence;
+      // Wait for one second before starting over
+      setTimeout(() => {
+        sequence = lastChar; // Start the sequence with the last character chosen
+        document.getElementById("progressbar").textContent = sequence;
+      }, 1000);
+    } else {
+      // Append the new character
+      sequence += lastChar;
+
+      // Update the div's content with the new sequence
+      document.getElementById("progressbar").textContent = sequence;
+    }
   }, 1000); // Run this every 1000 milliseconds (1 second)
 </script>
 </body>
