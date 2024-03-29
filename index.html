@@ -55,8 +55,8 @@
       } else {
         console.log('MetaMask is not installed. Please consider installing it.');
         connectMetamaskBtn.textContent = 'Please install MetaMask';
+        uiEnd();
       }
-      uiEnd();
     });
 
   const connectContractBtn = document.getElementById('connectContractBtn');
@@ -83,8 +83,8 @@
         });
     } else {
       console.log('Web3 is not found. Please install MetaMask or another web3 provider.');
+      uiEnd();
     }
-    uiEnd();
   });
 
   const guessBth = document.getElementById('guessBtn');
