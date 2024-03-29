@@ -140,6 +140,16 @@
       console.log('Num guessed event fired', event);
       let s = "Attempt " + event.returnValues[2]+". You guessed " + event.returnValues[1];
       if(event.returnValues[3]){//win
+        contract.methods.getNumWins().call()//getNumWins()
+                .then(result => {
+                  document.getElementById("contractAddress").innerHTML = "Contract: " + address;
+                  console.log("My wins: ", result);
+                  document.getElementById("myWins").innerHTML = "My wins: " + result;
+                })
+                .catch(error => {
+                  console.error("An error occurred: ", error);
+                },
+
         s+= ' and won! <img src="./img/star.png" alt="Star"/>';
       }else{
         s+=" and failed, please try again.";

@@ -15,10 +15,10 @@
   <div id="contractAddress"></div>
   <div id="myWins"></div>
   <div id="numGuesses"></div>
+  <div id="viewNumber"></div>
   <div><button id="connectMetamaskBtn" class="btn shape">Connect Metamask</button></div>
   <div id="accountArea"></div>
   <div><button id="connectContractBtn" class="btn shape">Connect Contract</button></div>
-  <div id="contractArea" class="txt"></div>
   <div>
     <button id="guessBtn" class="btn shape">Guess</button>
     <input type="number" size="4" id="guessNumber" class="shape nums input" placeholder="number" onblur="clearInputs()"/>
@@ -32,10 +32,9 @@
 </div>
 <script>
   const web3 = new Web3(window.ethereum);
-  const address = "0xBbb3478e4944b569A4f32984C43e6B32c32fdE1E";
-  const ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"performer","type":"address"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NewGame","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"guesser","type":"address"},{"indexed":false,"internalType":"uint256","name":"guessedNumber","type":"uint256"},{"indexed":false,"internalType":"bool","name":"isCorrect","type":"bool"}],"name":"NumberGuessed","type":"event"},{"inputs":[],"name":"actualNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getMaxNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getNumGuesses","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getNumWins","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getSender","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_guessedNumber","type":"uint256"}],"name":"guess","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"newGame","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumber","type":"uint256"}],"name":"setMaxNumber","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"thisAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}];
+  const address = "0xB5B3F727ab43bECbC61CD983BA60869774A54640";
+  const ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"player","type":"address"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NewGame","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"player","type":"address"},{"indexed":false,"internalType":"uint256","name":"guessedNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"numGuesses","type":"uint256"},{"indexed":false,"internalType":"bool","name":"isCorrect","type":"bool"}],"name":"NumberGuessed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"player","type":"address"},{"indexed":false,"internalType":"uint256","name":"maxNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"UpdatedMaxNumber","type":"event"},{"inputs":[],"name":"actualNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getMaxNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getNumGuesses","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getNumWins","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getSender","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_guessedNumber","type":"uint256"}],"name":"guess","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"newGame","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumber","type":"uint256"}],"name":"setMaxNumber","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"thisAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}];
   const contract = new web3.eth.Contract(ABI, address);
-  let numGuesses = 0;
 
   const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
     connectMetamaskBtn.addEventListener('click', () => {
@@ -71,7 +70,7 @@
       contract.methods.getMaxNumber().call()
         .then(result => {
           console.log("Max number: ", result);
-          document.getElementById("contractArea").innerHTML = "Max number: " + result;
+          document.getElementById("viewNumber").innerHTML = "Max number: " + result;
         })
         .catch(error => {
           console.error("An error occurred: ", error);
@@ -98,8 +97,6 @@
         console.error("Transaction error: ", err);
       });
 
-      numGuesses++;
-      document.getElementById("numGuesses").innerHTML = "Guess attempts: " + numGuesses;
       guessNumberInput.value = "";
   });
 
@@ -136,6 +133,27 @@
       input.classList.remove('red');
     });
   }
+
+  // Subscribe to the NumberGuessed() event
+  contract.events.NumberGuessed()
+    .on('data', function(event) {
+      console.log('Num guessed event fired', event);
+      let s = "Attempt " + event.returnValues[2]+". You guessed " + event.returnValues[1];
+      if(event.returnValues[3]){//win
+        s+= ' and won! <img src="./img/star.png" alt="Star"/>';
+      }else{
+        s+=" and failed, please try again.";
+      }
+
+      document.getElementById("numGuesses").innerHTML = s;
+    }).on('error', console.error);
+
+  contract.events.UpdatedMaxNumber()
+    .on('data', function(event) {
+      console.log('Num guessed event fired', event);
+      let s = "Updated max number: " + event.returnValues[1];
+      document.getElementById("viewNumber").innerHTML = s;
+    }).on('error', console.error);
 </script>
 </body>
 </html>
