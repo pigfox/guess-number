@@ -15,7 +15,7 @@
   <div id="contractAddress"></div>
   <div id="myWins"></div>
   <div id="numGuesses"></div>
-  <div id="maxNumber"></div>
+  <div id="viewNumber"></div>
   <div><button id="connectMetamaskBtn" class="btn shape">Connect Metamask</button></div>
   <div id="accountArea"></div>
   <div><button id="connectContractBtn" class="btn shape">Connect Contract</button></div>
@@ -70,7 +70,7 @@
       contract.methods.getMaxNumber().call()
         .then(result => {
           console.log("Max number: ", result);
-          document.getElementById("maxNumber").innerHTML = "Max number: " + result;
+          document.getElementById("viewNumber").innerHTML = "Max number: " + result;
         })
         .catch(error => {
           console.error("An error occurred: ", error);
@@ -152,7 +152,7 @@
     .on('data', function(event) {
       console.log('Num guessed event fired', event);
       let s = "Updated max number: " + event.returnValues[1];
-      document.getElementById("maxNumber").innerHTML = s;
+      document.getElementById("viewNumber").innerHTML = s;
     }).on('error', console.error);
 </script>
 </body>
