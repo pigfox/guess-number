@@ -101,6 +101,10 @@ a:active {
   padding-top: 3px;
 }
 
+#anchor{
+  position: relative;
+}
+
 #progressbar{
   background-color: white;
   color: black;
