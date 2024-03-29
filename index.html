@@ -12,7 +12,7 @@
 <div class="content">
   <a href="/"><img src="./img/logo.webp" alt="Logo" id="logo"/></a>
   <h3>Guess a number on Sepolia</h3>
-  <div id="progressbar">xxxx</div>
+  <div id="progressbar"></div>
   <div id="contractAddress"></div>
   <div id="myWins"></div>
   <div id="numGuesses"></div>
@@ -172,6 +172,21 @@
       let s = "Updated max number: " + event.returnValues[1];
       document.getElementById("viewNumber").innerHTML = s;
     }).on('error', console.error);
+</script>
+<script>
+  let sequence = "00000000"; // Start with a base sequence
+  let lastChar = '0'; // Keep track of the last character added
+
+  setInterval(() => {
+    // Determine the next character (alternate)
+    lastChar = lastChar === '0' ? '1' : '0';
+
+    // Append the new character and ensure the sequence is 8 characters long
+    sequence = (sequence + lastChar).substring(sequence.length > 7 ? 1 : 0);
+
+    // Update the div's content with the new sequence
+    document.getElementById("progressbar").textContent = sequence;
+  }, 1000); // Run this every 1000 milliseconds (1 second)
 </script>
 </body>
 </html>
