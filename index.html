@@ -113,16 +113,15 @@
   newGameBtn.addEventListener('click', () => {
     uiStart();
     console.log("newGameBtn");
-    contract.methods.newGame().send({ from: ethereum.selectedAddress });
-    document.getElementById("numGuesses").innerHTML = "";
-    contract.events.UpdatedMaxNumber()
-      .on('data', function(event) {
-        console.log('Num guessed event fired', event);
-        let s = "Max number: " + event.returnValues[1];
-        document.getElementById("viewNumber").innerHTML = s;
+    contract.methods.newGame().send({ from: ethereum.selectedAddress })
+      .then(receipt => {
+        console.log("Transaction receipt: ", receipt);
+        document.getElementById("numGuesses").innerHTML = "";
         uiEnd();
-      }).on('error', console.error);
-
+      })
+      .catch(err => {
+        console.error("Transaction error: ", err);
+      });
   });
 
   const setMaxNumberBtn = document.getElementById('setMaxNumberBtn');
@@ -185,6 +184,20 @@
       let s = "Updated max number: " + event.returnValues[1];
       document.getElementById("viewNumber").innerHTML = s;
     }).on('error', console.error);
+
+  contract.events.NewGame()
+    .on('data', function(event) {
+      console.log('New game event fired', event);
+      contract.methods.getMaxNumber().call()
+        .then(result => {
+          console.log("Max number: ", result);
+          document.getElementById("viewNumber").innerHTML = "Max number: " + result;
+          uiEnd();
+        })
+        .catch(error => {
+          console.error("An error occurred: ", error);
+        });
+  }).on('error', console.error);
 
   function uiStart(){
     console.log("uiStart()");
