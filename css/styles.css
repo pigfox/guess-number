@@ -96,3 +96,7 @@ a:active {
   background-color: transparent;
   text-decoration: none;
 }
+
+#star{
+  padding-top: 3px;
+}

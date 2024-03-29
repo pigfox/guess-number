@@ -156,7 +156,7 @@
                 .catch(error => {
                   console.error("An error occurred: ", error);
                 }),
-        s+= ' and won! <img src="./img/star.png" alt="Star"/>';
+        s+= ' and won! <img src="./img/star.png" id="star" alt="Star"/>';
         document.getElementById('guessBtn').disabled = true;
       }else{
         s+=" and failed, please try again.";
