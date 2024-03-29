@@ -98,7 +98,8 @@ a:active {
 }
 
 #star{
-  margin-top: 3px;
+  margin-top: -3px;
+  border: 0px;
 }
 
 #anchor{
