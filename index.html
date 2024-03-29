@@ -116,24 +116,12 @@
     contract.methods.newGame().send({ from: ethereum.selectedAddress });
     document.getElementById("numGuesses").innerHTML = "";
     contract.events.UpdatedMaxNumber()
-      .then(data => {
-        console.log(data)
-        //console.log("Transaction receipt: ", receipt);
-        let s = "Max number: " + data.returnValues[1];
-        document.getElementById("viewNumber").innerHTML = s;
-        uiEnd();
-      })
-      .catch(err => {
-        console.error("Transaction error: ", err);
-      });
-            /*
       .on('data', function(event) {
         console.log('Num guessed event fired', event);
         let s = "Max number: " + event.returnValues[1];
         document.getElementById("viewNumber").innerHTML = s;
         uiEnd();
-        */
-      //.on('error', console.error);
+      }).on('error', console.error);
 
   });
 
