@@ -104,6 +104,13 @@
   newGameBtn.addEventListener('click', () => {
     console.log("newGameBtn");
     contract.methods.newGame().send({ from: ethereum.selectedAddress });
+    document.getElementById("numGuesses").innerHTML = "";
+    contract.events.UpdatedMaxNumber()
+            .on('data', function(event) {
+              console.log('Num guessed event fired', event);
+              let s = "Max number: " + event.returnValues[1];
+              document.getElementById("viewNumber").innerHTML = s;
+            }).on('error', console.error);
   });
 
   const setMaxNumberBtn = document.getElementById('setMaxNumberBtn');
