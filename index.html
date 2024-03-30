@@ -61,8 +61,8 @@
       } else {
         console.log('MetaMask is not installed. Please consider installing it.');
         connectMetamaskBtn.textContent = 'Please install MetaMask';
+        noMetamask()
         uiEnd();
-        alert('Metamask required!');
       }
     });
 
@@ -215,6 +215,13 @@
     console.log("uiEnd()");
     document.getElementById("progressbar").style.display = "none";
     document.getElementById("controls").style.display = "block";
+  }
+
+  function noMetamask(){
+    connectContractBtn.style.display = "none";
+    guessBth.style.display = "none";
+    newGameBtn.style.display = "none";
+    setMaxNumberBtn.style.display = "none";
   }
 </script>
 <script>
