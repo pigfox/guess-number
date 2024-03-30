@@ -98,7 +98,6 @@
       return;
     }
     uiStart();
-    console.log("This should not print if input is empty.");
     contract.methods.guess(guessNumber).send({ from: ethereum.selectedAddress })
       .then(receipt => {
         console.log("Transaction receipt: ", receipt);
@@ -152,16 +151,15 @@
 
   const setMaxNumberBtn = document.getElementById('setMaxNumberBtn');
   setMaxNumberBtn.addEventListener('click', () => {
-    uiStart();
     console.log("setMaxNumber");
     let maxNumberInput = document.getElementById('maxNumber');
     let maxNumber = maxNumberInput.value;
-    if(maxNumber == ""){
+    if(maxNumber.length == 0){
       maxNumberInput.classList.add('red');
       maxNumberInput.focus();
       return;
     }
-
+    uiStart();
     contract.methods.setMaxNumber(maxNumber).send({ from: ethereum.selectedAddress })
       .then(receipt => {
         console.log("Transaction receipt: ", receipt);
