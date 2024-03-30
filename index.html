@@ -61,16 +61,12 @@
       } else {
         console.log('MetaMask is not installed. Please consider installing it.');
         connectMetamaskBtn.textContent = 'Please install MetaMask';
-        metaMaskInstalled = false;
+        uiEnd();
+        alert('Metamask required!');
       }
     });
 
   const connectContractBtn = document.getElementById('connectContractBtn');
-  /*
-  if(!metaMaskInstalled){
-    connectContractBtn.disabled = true;
-  }
-  */
   connectContractBtn.addEventListener('click', () => {
     uiStart();
     if (typeof Web3 !== 'undefined') {
