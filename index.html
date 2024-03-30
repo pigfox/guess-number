@@ -54,6 +54,7 @@
         })
           .catch(err => {
           console.error('User denied account access', err);
+          uiEnd();
         });
       } else {
         console.log('MetaMask is not installed. Please consider installing it.');
