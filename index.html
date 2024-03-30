@@ -66,9 +66,11 @@
     });
 
   const connectContractBtn = document.getElementById('connectContractBtn');
+  /*
   if(!metaMaskInstalled){
     connectContractBtn.disabled = true;
   }
+  */
   connectContractBtn.addEventListener('click', () => {
     uiStart();
     if (typeof Web3 !== 'undefined') {
