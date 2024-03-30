@@ -92,7 +92,6 @@
     let guessNumberInput = document.getElementById('guessNumber');
     let guessNumber = guessNumberInput.value;
     if(guessNumber.length == 0){
-      console.log("Empty input, should return now.");
       guessNumberInput.classList.add('red');
       guessNumberInput.focus();
       return;
@@ -109,31 +108,7 @@
 
     guessNumberInput.value = "";
   });
-  /*
-  guessBth.addEventListener('click', (event) => {
-    uiStart();
-    let guessNumberInput = document.getElementById('guessNumber');
-    let guessNumber = guessNumberInput.value;
-    if(guessNumber.length == 0){
-      guessNumberInput.classList.add('red');
-      guessNumberInput.focus();
-      event.preventDefault();
-      event.stopPropagation();
-      return;
-    }
-    contract.methods.guess(guessNumber).send({ from: ethereum.selectedAddress })
-      .then(receipt => {
-        console.log("Transaction receipt: ", receipt);
-        uiEnd();
-      })
-      .catch(err => {
-        console.error("Transaction error: ", err);
-      });
 
-      guessNumberInput.value = "";
-
-  });
-*/
   const newGameBtn = document.getElementById('newGameBtn');
   newGameBtn.addEventListener('click', () => {
     uiStart();
