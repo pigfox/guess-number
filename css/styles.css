@@ -43,12 +43,15 @@ html, body {
   }
 
   .btn {
-    background-color: #666666;
     color: white;
+    background-image: url('../img/roman-bg.png'); /* Sets the background image */
+    background-size: cover; /* Covers the entire button area, might crop the image */
+    background-position: center; /* Centers the image in the button */
+    background-repeat: no-repeat;
   }
 
   .btn:hover {
-      background-color: #333333; /* Darker grey background on hover */
+      /*  background-color: #333333; Darker grey background on hover */
       transform: scale(1.05); /* Slightly larger button on hover */
     }
   
