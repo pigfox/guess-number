@@ -89,6 +89,16 @@
 
   const guessBth = document.getElementById('guessBtn');
   guessBth.addEventListener('click', (event) => {
+    let guessNumberInput = document.getElementById('guessNumber');
+    let guessNumber = guessNumberInput.value;
+    if(guessNumber.length == 0){
+      console.log("Empty input, should return now.");
+      return;
+    }
+    console.log("This should not print if input is empty.");
+  });
+  /*
+  guessBth.addEventListener('click', (event) => {
     uiStart();
     let guessNumberInput = document.getElementById('guessNumber');
     let guessNumber = guessNumberInput.value;
@@ -111,7 +121,7 @@
       guessNumberInput.value = "";
 
   });
-
+*/
   const newGameBtn = document.getElementById('newGameBtn');
   newGameBtn.addEventListener('click', () => {
     uiStart();
