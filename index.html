@@ -93,6 +93,8 @@
     let guessNumber = guessNumberInput.value;
     if(guessNumber.length == 0){
       console.log("Empty input, should return now.");
+      guessNumberInput.classList.add('red');
+      guessNumberInput.focus();
       return;
     }
     console.log("This should not print if input is empty.");
