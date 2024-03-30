@@ -13,6 +13,14 @@ html, body {
   color: #000000;
   }
 
+  #logo{
+    padding: 0px;
+    margin: 0px;
+    border: 4px solid #eeeeee;
+    width: 125px;
+    height:125px;
+  }
+
   .content {
     padding: 10px;
   }
@@ -46,16 +54,6 @@ html, body {
   
   .btn:active {
     transform: scale(0.95); /* Slightly smaller button when clicked */
-  }
-
-  #logo{
-    border: 4px solid #eeeeee; /* Solid blue border */
-    border-radius: 10px; /* Rounded corners for the border */
-    padding: 0px; /* Space between the image and its border */
-    margin: 0px; 
-    margin: auto; /* Centers the logo horizontally */
-    max-width: 100%; /* Makes the image responsive */
-    height: auto;
   }
 
   .small{
