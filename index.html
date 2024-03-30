@@ -40,12 +40,14 @@
   const address = "0xB5B3F727ab43bECbC61CD983BA60869774A54640";
   const ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"player","type":"address"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NewGame","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"player","type":"address"},{"indexed":false,"internalType":"uint256","name":"guessedNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"numGuesses","type":"uint256"},{"indexed":false,"internalType":"bool","name":"isCorrect","type":"bool"}],"name":"NumberGuessed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"player","type":"address"},{"indexed":false,"internalType":"uint256","name":"maxNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"UpdatedMaxNumber","type":"event"},{"inputs":[],"name":"actualNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getMaxNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getNumGuesses","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getNumWins","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getSender","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_guessedNumber","type":"uint256"}],"name":"guess","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"newGame","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumber","type":"uint256"}],"name":"setMaxNumber","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"thisAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}];
   const contract = new web3.eth.Contract(ABI, address);
+  let metaMaskInstalled;
 
   const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
     connectMetamaskBtn.addEventListener('click', () => {
       uiStart();
       if (typeof window.ethereum !== 'undefined') {
         console.log('MetaMask is installed!');
+        metaMaskInstalled = true;
         window.ethereum.request({ method: 'eth_requestAccounts' })
           .then(accounts => {
           console.log('Wallet connected', accounts[0]);
@@ -59,10 +61,14 @@
       } else {
         console.log('MetaMask is not installed. Please consider installing it.');
         connectMetamaskBtn.textContent = 'Please install MetaMask';
+        metaMaskInstalled = false;
       }
     });
 
   const connectContractBtn = document.getElementById('connectContractBtn');
+  if(!metaMaskInstalled){
+    connectContractBtn.disabled = true;
+  }
   connectContractBtn.addEventListener('click', () => {
     uiStart();
     if (typeof Web3 !== 'undefined') {
