@@ -48,7 +48,7 @@ html, body {
   }
   
   .btn:hover {
-    background-color: #0056b3; /* Darker blue background on hover */
+    background-color: #333333; /* Darker blue background on hover */
     transform: scale(1.05); /* Slightly larger button on hover */
   }
   
