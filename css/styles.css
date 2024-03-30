@@ -31,11 +31,6 @@ html, body {
     } 
   }
 
-  .btn {
-    background-color: #007BFF;
-    color: white;
-  }
-
   .shape{
     padding: 10px 10px; /* Padding around the text */
     border: 1px black solid; /* No border */
@@ -46,11 +41,16 @@ html, body {
     margin-top:5px;
     margin-bottom:5px;
   }
-  
-  .btn:hover {
-    background-color: #333333; /* Darker blue background on hover */
-    transform: scale(1.05); /* Slightly larger button on hover */
+
+  .btn {
+    background-color: #666666;
+    color: white;
   }
+
+  .btn:hover {
+      background-color: #333333; /* Darker grey background on hover */
+      transform: scale(1.05); /* Slightly larger button on hover */
+    }
   
   .btn:active {
     transform: scale(0.95); /* Slightly smaller button when clicked */
