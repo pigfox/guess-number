@@ -97,7 +97,18 @@
       guessNumberInput.focus();
       return;
     }
+    uiStart();
     console.log("This should not print if input is empty.");
+    contract.methods.guess(guessNumber).send({ from: ethereum.selectedAddress })
+      .then(receipt => {
+        console.log("Transaction receipt: ", receipt);
+        uiEnd();
+      })
+      .catch(err => {
+        console.error("Transaction error: ", err);
+      });
+
+    guessNumberInput.value = "";
   });
   /*
   guessBth.addEventListener('click', (event) => {
