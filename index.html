@@ -88,13 +88,15 @@
   });
 
   const guessBth = document.getElementById('guessBtn');
-  guessBth.addEventListener('click', () => {
+  guessBth.addEventListener('click', (event) => {
     uiStart();
     let guessNumberInput = document.getElementById('guessNumber');
     let guessNumber = guessNumberInput.value;
-    if(guessNumber == ""){
+    if(guessNumber.length == 0){
       guessNumberInput.classList.add('red');
       guessNumberInput.focus();
+      event.preventDefault();
+      event.stopPropagation();
       return;
     }
     contract.methods.guess(guessNumber).send({ from: ethereum.selectedAddress })
@@ -107,6 +109,7 @@
       });
 
       guessNumberInput.value = "";
+
   });
 
   const newGameBtn = document.getElementById('newGameBtn');
