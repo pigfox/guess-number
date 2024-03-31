@@ -263,14 +263,13 @@
   }, 1000); // Run this every 1000 milliseconds (1 second)
 </script>
 <script>
-  setInterval(refreshNums, 3000);
+  setInterval(refreshNums, 1000);
 
   function refreshNums() {
     let s=""
     for (let i = 0; i < 36; i++) {
       let n = generateRandomNumber();
       s += '<div class="row">';
-      //s += '<div class="diamond-box"><img src="./img/diamond-!bg.png" class="diamond"/></div>';
       s += '<div class="number">['+n+']</div>';
       s += '</div>';
     }
