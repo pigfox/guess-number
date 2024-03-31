@@ -184,8 +184,7 @@
       document.getElementById("numGuesses").innerHTML = s;
     }).on('error', console.error);
   console.log("web3:", web3);
-  web3.currentProvider.on('message', (message) => {//<--(index):187 Uncaught TypeError: Cannot read properties of undefined (reading 'on')
-    console.log('Provider message:', message);
+  web3.currentProvider.on('message', (message) => {
     if (message.type === 'data' && message.data) {
       console.log('Potential event message data:', message.data);
 /*
