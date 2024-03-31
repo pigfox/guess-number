@@ -188,11 +188,12 @@
     console.log('Provider message:', message);
     if (message.type === 'data' && message.data) {
       console.log('Potential event message data:', message.data);
-
+/*
       if (message.data.result && message.data.result.event === 'UpdatedMaxNumber') {
         let s = "Updated max number: " + message.data.result.returnValues[1];
         document.getElementById("viewNumber").innerHTML = s;
       }
+      */
     }
   }).on('error', console.error);
 /*
