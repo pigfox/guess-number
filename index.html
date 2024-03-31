@@ -41,7 +41,7 @@
   const web3 = new Web3(window.ethereum);
   const address = "0xB5B3F727ab43bECbC61CD983BA60869774A54640";
   const ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"player","type":"address"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NewGame","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"player","type":"address"},{"indexed":false,"internalType":"uint256","name":"guessedNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"numGuesses","type":"uint256"},{"indexed":false,"internalType":"bool","name":"isCorrect","type":"bool"}],"name":"NumberGuessed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"player","type":"address"},{"indexed":false,"internalType":"uint256","name":"maxNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"UpdatedMaxNumber","type":"event"},{"inputs":[],"name":"actualNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getMaxNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getNumGuesses","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getNumWins","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getSender","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_guessedNumber","type":"uint256"}],"name":"guess","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"newGame","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumber","type":"uint256"}],"name":"setMaxNumber","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"thisAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}];
-  const contract = new web3.eth.Contract(ABI, address);
+  const instance = new web3.eth.Contract(ABI, address);
 
   const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
     connectMetamaskBtn.addEventListener('click', () => {
@@ -71,7 +71,7 @@
   connectContractBtn.addEventListener('click', () => {
     uiStart();
     if (typeof Web3 !== 'undefined') {
-      contract.methods.getNumWins().call()//getNumWins()
+      instance.methods.getNumWins().call()//getNumWins()
         .then(result => {
           document.getElementById("contractAddress").innerHTML = "Contract: " + address;
           console.log("My wins: ", result);
@@ -80,7 +80,7 @@
           console.error("An error occurred: ", error);
         });
 
-      contract.methods.getMaxNumber().call()
+      instance.methods.getMaxNumber().call()
         .then(result => {
           console.log("Max number: ", result);
           document.getElementById("viewNumber").innerHTML = "Max number: " + result;
@@ -103,7 +103,7 @@
       return;
     }
     uiStart();
-    contract.methods.guess(guessNumber).send({ from: ethereum.selectedAddress })
+    instance.methods.guess(guessNumber).send({ from: ethereum.selectedAddress })
       .then(receipt => {
         console.log("Transaction receipt: ", receipt);
         uiEnd();
@@ -120,7 +120,7 @@
   newGameBtn.addEventListener('click', () => {
     uiStart();
     console.log("newGameBtn");
-    contract.methods.newGame().send({ from: ethereum.selectedAddress })
+    instance.methods.newGame().send({ from: ethereum.selectedAddress })
       .then(receipt => {
         console.log("Transaction receipt: ", receipt);
         document.getElementById("numGuesses").innerHTML = "";
@@ -142,7 +142,7 @@
       return;
     }
     uiStart();
-    contract.methods.setMaxNumber(maxNumber).send({ from: ethereum.selectedAddress })
+    instance.methods.setMaxNumber(maxNumber).send({ from: ethereum.selectedAddress })
       .then(receipt => {
         console.log("Transaction receipt: ", receipt);
         uiEnd();
@@ -186,8 +186,7 @@
     }).on('error', console.error);
  */
 
-  const guessContract = new web3.eth.Contract(contract, address);
-  guessContract.events.NumberGuessed({
+  instance.events.NumberGuessed({
     fromBlock: 'latest'
   }, function(error, event) {
     if (error) {
