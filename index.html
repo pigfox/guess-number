@@ -202,7 +202,7 @@
     web3.currentProvider.on('message', (message) => {
       console.log("tag here@189");
       console.log("message.type:", message.type);
-      console.log("message.data:", message.data);
+      console.log("message:", message);
     }).on('error', console.error);
 /*
     contract.events.UpdatedMaxNumber()
