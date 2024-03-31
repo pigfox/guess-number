@@ -160,7 +160,7 @@
       input.classList.remove('red');
     });
   }
-
+  /*
   // Subscribe to the NumberGuessed() event
   contract.events.NumberGuessed()
     .on('data', function(event) {
@@ -184,12 +184,12 @@
 
       document.getElementById("numGuesses").innerHTML = s;
     }).on('error', console.error);
-  /*
+ */
         web3.currentProvider.on('message', (message) => {
           console.log("message.type:", message.type);
           console.log("message.data:", message.data);
       }).on('error', console.error);
-   */
+
     contract.events.UpdatedMaxNumber()
       .on('data', function(event) {
         console.log('Updated max number event fired', event);
