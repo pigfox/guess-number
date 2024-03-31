@@ -185,10 +185,18 @@
       document.getElementById("numGuesses").innerHTML = s;
     }).on('error', console.error);
  */
-        web3.currentProvider.on('message', (message) => {
-          console.log("message.type:", message.type);
-          console.log("message.data:", message.data);
-      }).on('error', console.error);
+
+  contract.events.NumberGuessed()
+      .on('message', function(event) {
+      console.log(event);
+  }).on('error', console.error);
+
+
+    web3.currentProvider.on('message', (message) => {
+      console.log("tag here@189");
+      console.log("message.type:", message.type);
+      console.log("message.data:", message.data);
+    }).on('error', console.error);
 /*
     contract.events.UpdatedMaxNumber()
       .on('data', function(event) {
