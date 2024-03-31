@@ -189,10 +189,12 @@
   instance.events.NumberGuessed({
     fromBlock: 'latest'
   }, function(error, event) {
+    console.log('instance.events.NumberGuessed');
     if (error) {
       console.error('Error:', error);
     } else {
       console.log('NumberGuessed event:', event.returnValues);
+      //const parsedLog = contractInterface.parseLog(event)
     }
   });
 
