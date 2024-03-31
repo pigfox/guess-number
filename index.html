@@ -186,7 +186,7 @@
     }).on('error', console.error);
 
   contract.events.UpdatedMaxNumber()
-    .on('data', function(event) {
+    .on('message', function(event) {
       console.log('Num guessed event fired', event);
       let s = "Updated max number: " + event.returnValues[1];
       document.getElementById("viewNumber").innerHTML = s;
