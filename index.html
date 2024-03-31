@@ -41,7 +41,6 @@
   const address = "0xB5B3F727ab43bECbC61CD983BA60869774A54640";
   const ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"player","type":"address"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NewGame","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"player","type":"address"},{"indexed":false,"internalType":"uint256","name":"guessedNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"numGuesses","type":"uint256"},{"indexed":false,"internalType":"bool","name":"isCorrect","type":"bool"}],"name":"NumberGuessed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"player","type":"address"},{"indexed":false,"internalType":"uint256","name":"maxNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"UpdatedMaxNumber","type":"event"},{"inputs":[],"name":"actualNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getMaxNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getNumGuesses","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getNumWins","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getSender","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_guessedNumber","type":"uint256"}],"name":"guess","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"newGame","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumber","type":"uint256"}],"name":"setMaxNumber","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"thisAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}];
   const contract = new web3.eth.Contract(ABI, address);
-  let metaMaskInstalled;
 
   const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
     connectMetamaskBtn.addEventListener('click', () => {
@@ -53,7 +52,7 @@
           .then(accounts => {
           console.log('Wallet connected', accounts[0]);
           connectMetamaskBtn.textContent = 'Connected';
-            uiEnd();
+          uiEnd();
         })
           .catch(err => {
           console.error('User denied account access', err);
@@ -185,13 +184,25 @@
       document.getElementById("numGuesses").innerHTML = s;
     }).on('error', console.error);
 
+  web3.provider.on('message', (message) => {
+    console.log('Provider message:', message);
+    if (message.type === 'data' && message.data) {
+      console.log('Potential event message data:', message.data);
+
+      if (message.data.result && message.data.result.event === 'UpdatedMaxNumber') {
+        let s = "Updated max number: " + message.data.result.returnValues[1];
+        document.getElementById("viewNumber").innerHTML = s;
+      }
+    }
+  }).on('error', console.error);
+/*
   contract.events.UpdatedMaxNumber()
-    .on('data', function(event) {
+    .on('message', function(event) {
       console.log('Updated max number event fired', event);
       let s = "Updated max number: " + event.returnValues[1];
       document.getElementById("viewNumber").innerHTML = s;
     }).on('error', console.error);
-
+*/
   contract.events.NewGame()
     .on('data', function(event) {
       console.log('New game event fired', event);
