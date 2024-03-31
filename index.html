@@ -163,7 +163,7 @@
 
   // Subscribe to the NumberGuessed() event
   contract.events.NumberGuessed()
-    .on('data', function(event) {
+    .on('message', function(event) {
       console.log('Num guessed event fired', event);
       let s = "Attempt " + event.returnValues[2]+". You guessed " + event.returnValues[1];
       if(event.returnValues[3]){//win
