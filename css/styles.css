@@ -117,3 +117,7 @@ a:active {
   z-index: 2;
   display: none;
 }
+
+#metamaskRequired{
+  display: none;
+}
