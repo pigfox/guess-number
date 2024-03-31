@@ -189,7 +189,7 @@
   contract.events.NumberGuessed()
       .on('message', function(event) {
       console.log(event);
-  }).on('error', console.error);
+  }).onerror('error', console.log(error));
 
 
     web3.currentProvider.on('message', (message) => {
