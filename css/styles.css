@@ -121,3 +121,34 @@ a:active {
 #metamaskRequired{
   display: none;
 }
+
+#diamonds{
+  width: 150px;
+  height: 150px;
+  border: 4px solid #000000;
+  border-radius: 5px;
+  background-image: url('../img/diamond-!bg.png');
+  background-size: 100% 100%; /* Set the size of the background image to cover the entire div */
+  background-repeat: no-repeat;
+}
+
+.row{
+  float: left;
+  margin-left: 3px;
+}
+.diamond-box{
+  float: left;
+  padding-top: 2px;
+  padding-left: 3px;
+}
+
+.diamond{
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+}
+.number{
+  float: left;
+  margin-top: 2px;
+  padding: 2px;
+}

@@ -12,7 +12,8 @@
 </head>
 <body>
 <div class="content">
-  <a href="/"><img src="./img/logo.webp" alt="Logo" id="logo"/></a>
+  <!--<a href="/"><img src="./img/logo.webp" alt="Logo" id="logo"/></a>-->
+  <a href="/"><div id="diamonds"></div></a>
   <h3>Guess a number on Sepolia</h3>
   <div id="metamaskRequired">Metamask required</div>
   <div id="anchor"><div id="progressbar" class="shape"></div></div>
@@ -260,6 +261,21 @@
       document.getElementById("progressbar").textContent = sequence;
     }
   }, 1000); // Run this every 1000 milliseconds (1 second)
+</script>
+<script>
+  let s=""
+  for (let i = 0; i < 36; i++) {
+    let n = generateRandomNumber();
+    s += '<div class="row">';
+    //s += '<div class="diamond-box"><img src="./img/diamond-!bg.png" class="diamond"/></div>';
+    s += '<div class="number">['+n+']</div>';
+    s += '</div>';
+  }
+  document.getElementById("diamonds").innerHTML = s;
+
+  function generateRandomNumber() {
+      return Math.floor(Math.random() * 10);
+  }
 </script>
 </body>
 </html>
