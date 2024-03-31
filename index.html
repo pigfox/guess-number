@@ -183,17 +183,19 @@
 
       document.getElementById("numGuesses").innerHTML = s;
     }).on('error', console.error);
-  console.log("web3:", web3);
-  web3.currentProvider.on('message', (message) => {
-    if (message.type === 'data' && message.data) {
-      console.log('Potential event message data:', message.data);
-/*
-      if (message.data.result && message.data.result.event === 'UpdatedMaxNumber') {
-        let s = "Updated max number: " + message.data.result.returnValues[1];
-        document.getElementById("viewNumber").innerHTML = s;
+
+    web3.currentProvider.on('message', (message) => {
+      console.log("message:", message)
+      /*
+      if (message.type === 'data' && message.data) {
+        console.log('Potential event message data:', message.data.events.UpdatedMaxNumer);
+
+        if (message.data.result && message.data.result.event === 'UpdatedMaxNumber') {
+          let s = "Updated max number: " + message.data.result.returnValues[1];
+          document.getElementById("viewNumber").innerHTML = s;
+        }
+        */
       }
-      */
-    }
   }).on('error', console.error);
 /*
   contract.events.UpdatedMaxNumber()
