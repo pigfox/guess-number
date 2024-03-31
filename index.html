@@ -186,10 +186,16 @@
     }).on('error', console.error);
  */
 
-  contract.events.NumberGuessed()
-      .then(async (event) => {
-      console.log(event);
-  });//.onerror('error', console.log(error));
+  const guessContract = new web3.eth.Contract(contract, address);
+  guessContract.events.NumberGuessed({
+    fromBlock: 'latest'
+  }, function(error, event) {
+    if (error) {
+      console.error('Error:', error);
+    } else {
+      console.log('NumberGuessed event:', event.returnValues);
+    }
+  });
 
 
     web3.currentProvider.on('message', (message) => {
