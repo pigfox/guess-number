@@ -186,10 +186,14 @@
     }).on('error', console.error);
  */
 
+  /*
+  The event listener that is expected to capture the returned event.
+  It does nothing, no error.
+  * */
   instance.events.NumberGuessed({
     fromBlock: 'latest'
   }, function(error, event) {
-    console.log('@192');
+    console.log('@196');
     if (error) {
       console.error('Error:', error);
     } else {
@@ -198,7 +202,7 @@
   });
 
     web3.currentProvider.on('message', (message) => {
-      console.log("@201");
+      console.log("@205");
       console.log("message.type:", message.type);
       console.log("message:", message);
     }).on('error', console.error);
