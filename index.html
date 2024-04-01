@@ -200,12 +200,15 @@
       console.log('NumberGuessed event:', event.returnValues);
     }
   });
-
-    web3.currentProvider.on('message', (message) => {
-      console.log("@205");
-      console.log("message.type:", message.type);
-      console.log("message:", message);
-    }).on('error', console.error);
+  /*
+  This code captures some data.
+  But I don't get the returned guessedNumber
+  */
+  web3.currentProvider.on('message', (message) => {
+    console.log("@208");
+    console.log("message.type:", message.type);
+    console.log("message:", message);
+  }).on('error', console.error);
 /*
     contract.events.UpdatedMaxNumber()
       .on('data', function(event) {
