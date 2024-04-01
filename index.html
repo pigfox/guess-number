@@ -186,6 +186,7 @@
     }).on('error', console.error);
  */
 
+  console.log('@189');
   instance.events.NumberGuessed({
     fromBlock: 'latest'
   }, function(error, event) {
@@ -194,13 +195,12 @@
       console.error('Error:', error);
     } else {
       console.log('NumberGuessed event:', event.returnValues);
-      //const parsedLog = contractInterface.parseLog(event)
     }
   });
-
+  console.log('@200');
 
     web3.currentProvider.on('message', (message) => {
-      console.log("tag here@189");
+      console.log("@203");
       console.log("message.type:", message.type);
       console.log("message:", message);
     }).on('error', console.error);
