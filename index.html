@@ -189,7 +189,7 @@
   /*
   The event listener that is expected to capture the returned event.
   It does nothing, no error.
-  * */
+  *
   web3.eth.getBlockNumber().then(latestBlockNumber => {
     const fromBlockNumber = parseInt(latestBlockNumber) - 100000; // Adjust as needed
     instance.events.NumberGuessed({
@@ -204,6 +204,8 @@
       }
     });
   });
+   */
+
   /*
   This code captures some data.
   But I don't get the returned guessedNumber
