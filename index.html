@@ -190,15 +190,19 @@
   The event listener that is expected to capture the returned event.
   It does nothing, no error.
   * */
-  instance.events.NumberGuessed({
-    fromBlock: 'latest'
-  }, function(error, event) {
-    console.log('@196');
-    if (error) {
-      console.error('Error:', error);
-    } else {
-      console.log('NumberGuessed event:', event.returnValues);
-    }
+  web3.eth.getBlockNumber().then(latestBlockNumber => {
+    const fromBlockNumber = parseInt(latestBlockNumber) - 100000; // Adjust as needed
+    instance.events.NumberGuessed({
+      fromBlock: fromBlockNumber,
+      toBlock: 'latest' // 'latest' to get events until the latest block
+    }).on('data', function (error, event) {
+      console.log('@199');
+      if (error) {
+        console.error('Error:', error);
+      } else {
+        console.log('NumberGuessed event:', event.returnValues);
+      }
+    });
   });
   /*
   This code captures some data.

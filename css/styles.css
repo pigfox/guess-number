@@ -130,6 +130,7 @@ a:active {
   background-image: url('../img/diamond-!bg.png');
   background-size: 100% 100%; /* Set the size of the background image to cover the entire div */
   background-repeat: no-repeat;
+  /* animation: pulse 2s linear infinite; */
 }
 
 .row{
@@ -151,4 +152,19 @@ a:active {
   float: left;
   margin-top: 2px;
   padding: 2px;
+}
+
+@-webkit-keyframes "pulse" {
+  0% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  50% {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 }
