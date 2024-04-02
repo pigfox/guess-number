@@ -208,11 +208,21 @@
   This code captures some data.
   But I don't get the returned guessedNumber
   */
+  let msg = {};
   web3.currentProvider.on('message', (message) => {
-    console.log("@208");
-    console.log("message.type:", message.type);
-    console.log("message:", message);
+    //console.log("message.type:", message.type);
+    //console.log("message.data:", message.data);
+    msg = message
+    console.log("@193");
   }).on('error', console.error);
+
+  const decodedLog = web3.eth.abi.decodeLog(
+          ABI.find(e => e.type === 'event' && e.name === 'NumberGuessed').inputs,
+          //msg.data.result.data,
+          //msg.data.result.topics.slice(1)
+  );
+  console.log("msg.data", msg.data);
+  console.log("NumberGuessed Event: ", decodedLog);
 /*
     contract.events.UpdatedMaxNumber()
       .on('data', function(event) {
