@@ -83,7 +83,7 @@
       instance.methods.getMaxNumber().call()
         .then(result => {
           console.log("Max number: ", result);
-          document.getElementById("viewNumber").innerHTML = "Max number: " + result;
+          document.getElementById("myMaxNumber").innerHTML = "Max number: " + result;
           uiEnd();
         }).catch(error => {
           console.error("An error occurred: ", error);
