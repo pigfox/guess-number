@@ -200,6 +200,8 @@
         });
 
         event.on('data', function (event) {
+            console.log("@203");
+            console.log('NumberGuessed event return values:', event.returnValues.guessedNumber);
             console.log('NumberGuessed event return values:', event.returnValues);
         });
 
@@ -218,7 +220,7 @@
     //console.log("message.type:", message.type);
     //console.log("message.data:", message.data);
     msg = message
-    console.log("@193");
+    console.log("@221");
   }).on('error', console.error);
 
   const decodedLog = web3.eth.abi.decodeLog(
