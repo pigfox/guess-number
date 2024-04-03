@@ -2,7 +2,7 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-image: url('../img/dragonfly.jpg');
+    background-image: url('../img/dragonfly.jpg'); /* dragonfly.jpg */
     background-position: center center; /* Centers the background image horizontally and vertically */
     background-repeat: no-repeat; /* Prevents the background image from repeating */
      /* Use one of the following options for background-size depending on your needs */
@@ -10,7 +10,7 @@ html, body {
     /* OR
     background-size: contain;
     */
-  color: #000000;
+  color: #ffffff;
   }
 
   #logo{
@@ -45,7 +45,7 @@ html, body {
 
   .btn {
     color: white;
-    background-image: url('../img/red-bg.jpg'); /* Sets the background image */
+    background-image: url('../img/red-bg.jpg'); /* red-bg.jpg */
     background-size: cover; /* Covers the entire button area, might crop the image */
     background-position: center; /* Centers the image in the button */
     background-repeat: no-repeat;
@@ -127,10 +127,10 @@ a:active {
   height: 150px;
   border: 4px solid #000000;
   border-radius: 5px;
-  background-image: url('../img/diamond-!bg.png');
+  background-image: url('../img/red-bg.jpg');
   background-size: 100% 100%; /* Set the size of the background image to cover the entire div */
   background-repeat: no-repeat;
-  /* animation: pulse 2s linear infinite; */
+  /* animation: pulse 4s linear infinite; */
 }
 
 .row{
@@ -152,6 +152,7 @@ a:active {
   float: left;
   margin-top: 2px;
   padding: 2px;
+  color: white;
 }
 
 @-webkit-keyframes "pulse" {
@@ -160,8 +161,8 @@ a:active {
     transform: scale(1.1);
   }
   50% {
-    -webkit-transform: scale(0.8);
-    transform: scale(0.8);
+    -webkit-transform: scale(0.0);
+    transform: scale(0.0);
   }
   100% {
     -webkit-transform: scale(1);

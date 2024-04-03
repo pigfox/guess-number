@@ -186,11 +186,15 @@
     }).on('error', console.error);
  */
 
-  /*
-  The event listener that is expected to capture the returned event.
-  It does nothing, no error.
+  contract.methods.getNumWins().call()//getNumWins()
+          .then(wins => {
+            console.error("wins: ", wins);
+          })
+          .catch(error => {
+            console.error("An error occurred: ", error);
+          });
 
-   */
+
  web3.eth.getBlockNumber()
     .then(latestBlockNumber => {
       const fromBlockNumber = parseInt(latestBlockNumber) - 100000; // Adjust as needed
