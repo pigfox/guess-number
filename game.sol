@@ -11,7 +11,7 @@ contract GuessNumber {
     mapping(address => uint) private wins;
     mapping(address => bool) private addressExists;
     address[] private players;
-    event NumberGuessed(address indexed player, uint guessedNumber, uint numGuesses, bool isCorrect);
+    event NumberGuessed(address indexed player, uint guessedNumber, uint numGuesses, bool isCorrect, uint numWins);
     event NewGame(address indexed player, uint256 timestamp);
     event UpdatedMaxNumber(address indexed player, uint maxNumber, uint256 timestamp);
 
@@ -31,7 +31,7 @@ contract GuessNumber {
             wins[player]++;
         }
         numGuesses++;
-        emit NumberGuessed(player, _guessedNumber, numGuesses, isCorrect);
+        emit NumberGuessed(player, _guessedNumber, numGuesses, isCorrect, wins[player]);
         return isCorrect;
     }
 
