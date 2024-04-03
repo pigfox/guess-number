@@ -189,6 +189,7 @@
   instance.methods.getNumWins().call()//getNumWins()
           .then(wins => {
             console.log("wins: ", wins);
+            document.getElementById("myWins").innerHTML = "My wins: " + wins;
           })
           .catch(error => {
             console.error("An error occurred: ", error);
