@@ -205,8 +205,15 @@
         });
 
       numberGuessedEvent.on('data', function (event) {
-            console.log('event.returnValues.guessedNumber:', event.returnValues.guessedNumber);
-            console.log('event.returnValues:', event.returnValues.isCorrect);
+        let rv = event.returnValues;
+        let s = 'You guessed ' + rv.guessedNumber;
+        if (rv.isCorrect){
+          s+= 'and won! <img src="./img/star.png" id="star" alt="Star"/>';
+        }else{
+          s+= ' and lost, please try again.'
+        }
+
+          document.getElementById("guessedNumber").innerHTML = "My wins: " + wins;
         });
 
       numberGuessedEvent.on('error', function (error) {
