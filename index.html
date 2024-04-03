@@ -186,7 +186,7 @@
     }).on('error', console.error);
  */
 
-  contract.methods.getNumWins().call()//getNumWins()
+  instance.methods.getNumWins().call()//getNumWins()
           .then(wins => {
             console.error("wins: ", wins);
           })
