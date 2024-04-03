@@ -194,18 +194,17 @@
  web3.eth.getBlockNumber()
     .then(latestBlockNumber => {
         const fromBlockNumber = parseInt(latestBlockNumber) - 100000; // Adjust as needed
-        const event = instance.events.NumberGuessed({
+        const numberGuessedEvent = instance.events.NumberGuessed({
             fromBlock: fromBlockNumber,
             toBlock: 'latest' // 'latest' to get events until the latest block
         });
 
-        event.on('data', function (event) {
-            console.log("@203");
+      numberGuessedEvent.on('data', function (event) {
             console.log('event.returnValues.guessedNumber:', event.returnValues.guessedNumber);
             console.log('event.returnValues:', event.returnValues);
         });
 
-        event.on('error', function (error) {
+      numberGuessedEvent.on('error', function (error) {
             console.error('Error:', error);
         });
     })
@@ -214,7 +213,7 @@
   /*
   This code captures some data.
   But I don't get the returned guessedNumber
-  */
+
   let msg = {};
   web3.currentProvider.on('message', (message) => {
     //console.log("message.type:", message.type);
@@ -222,7 +221,7 @@
     msg = message
     console.log("@221");
   }).on('error', console.error);
-
+  */
   const decodedLog = web3.eth.abi.decodeLog(
           ABI.find(e => e.type === 'event' && e.name === 'NumberGuessed').inputs,
           //msg.data.result.data,
@@ -273,6 +272,10 @@
     document.getElementById("guessNumber").style.display = "none";
     document.getElementById("maxNumber").style.display = "none";
     document.getElementById("metamaskRequired").style.display = "block";
+  }
+
+  function isNumeric(value) {
+    return !isNaN(value) && Number.isFinite(value);
   }
 </script>
 <script>
