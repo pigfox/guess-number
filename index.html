@@ -213,8 +213,8 @@
           s+= ' and lost, please try again.'
         }
 
-          document.getElementById("guessedNumber").innerHTML = "My wins: " + wins;
-        });
+         document.getElementById("guessedNumber").innerHTML = s;
+      });
 
       numberGuessedEvent.on('error', function (error) {
             console.error('Error:', error);
