@@ -1,0 +1,51 @@
+Here's how you can parse/decode the log that you're recieving as message inside web3.currentProvider.on():
+
+const contractAbi = [{ "inputs": [], "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "player", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" }], "name": "NewGame", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "player", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "guessedNumber", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "numGuesses", "type": "uint256" }, { "indexed": false, "internalType": "bool", "name": "isCorrect", "type": "bool" }], "name": "NumberGuessed", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "player", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "maxNumber", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" }], "name": "UpdatedMaxNumber", "type": "event" }, { "inputs": [], "name": "actualNumber", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "getMaxNumber", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "getNumGuesses", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "getNumWins", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "getSender", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_guessedNumber", "type": "uint256" }], "name": "guess", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "newGame", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_maxNumber", "type": "uint256" }], "name": "setMaxNumber", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "thisAddress", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }]
+
+const message = {
+    "type": "eth_subscription",
+    "data": {
+        "subscription": "0x8a847a2a780d3c3ed6f58a2d51f865a6",
+        "result": {
+            "address": "0xb5b3f727ab43becbc61cd983ba60869774a54640",
+            "blockHash": "0xc5a2e0c457bed08d9708bb6be2cf0932cc845a24012aed7dee553f0d9c0dcfde",
+            "blockNumber": "0x557ddf",
+            "data": "0x000000000000000000000000000000000000000000000000000000000000007b000000000000000000000000000000000000000000000000000000000000000e0000000000000000000000000000000000000000000000000000000000000000",
+            "logIndex": "0x3",
+            "removed": false,
+            "topics": [
+                "0x00ca972d572a1573ce61f99cb22d78e85c775628c176b13591bc5d474cb770ec",
+                "0x000000000000000000000000b5b3f727ab43becbc61cd983ba60869774a54640"
+            ],
+            "transactionHash": "0x091af4e5c4611bf172626c5914804a2afb050c912882ef18efeb30fbb72719fc",
+            "transactionIndex": "0x4"
+        }
+    }
+}
+
+const decodedLog = web3.eth.abi.decodeLog(
+                      contractAbi.find(e => e.type === 'event' && e.name === 'NumberGuessed').inputs,
+                      message.data.result.data,
+                      message.data.result.topics.slice(1)
+                   );
+
+console.log("NumberGuessed Event: ", decodedLog);
+
+console.log("Guessed Number: ", parseInt(decodedLog.guessedNumber))
+
+console.log("Number Of Guesses: ", parseInt(decodedLog.numGuesses))
+
+
+NumberGuessed Event:  {
+  '0': '0xB5B3F727ab43bECbC61CD983BA60869774A54640',
+  '1': 123n,
+  '2': 14n,
+  '3': false,
+  __length__: 4,
+  player: '0xB5B3F727ab43bECbC61CD983BA60869774A54640',
+  guessedNumber: 123n,
+  numGuesses: 14n,
+  isCorrect: false
+}
+Guessed Number:  123
+Number Of Guesses:  14
