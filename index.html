@@ -193,8 +193,24 @@
    */
  web3.eth.getBlockNumber()
     .then(latestBlockNumber => {
-        const fromBlockNumber = parseInt(latestBlockNumber) - 100000; // Adjust as needed
-        const numberGuessedEvent = instance.events.NumberGuessed({
+       const fromBlockNumber = parseInt(latestBlockNumber) - 100000; // Adjust as needed
+      //numWins
+      const numberWinsEvent = instance.events.getNumWins({
+        fromBlock: fromBlockNumber,
+        toBlock: 'latest' // 'latest' to get events until the latest block
+      });
+
+      numberWinsEvent.on('data', function (event) {
+        console.log('event.returnValues.xxx:', event.returnValues);
+        console.log('event.returnValues:', event.returnValues);
+      });
+
+      numberWinsEvent.on('error', function (error) {
+        console.error('Error:', error);
+      });
+
+      //numGuessed
+      const numberGuessedEvent = instance.events.NumberGuessed({
             fromBlock: fromBlockNumber,
             toBlock: 'latest' // 'latest' to get events until the latest block
         });
@@ -208,7 +224,6 @@
             console.error('Error:', error);
         });
     })
-
 
   /*
   This code captures some data.
