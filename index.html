@@ -20,7 +20,8 @@
   <div id="controls">
   <div id="contractAddress"></div>
   <div id="myWins"></div>
-  <div id="myGuesses"></div>
+  <div id="myGuess"></div>
+  <div id="myNumGuesses"></div>
   <div id="myMaxNumber"></div>
     <div><button id="connectMetamaskBtn" class="btn shape">Connect Metamask</button></div>
     <div id="accountArea"></div>
@@ -213,7 +214,7 @@
           s+= ' and lost, please try again.'
         }
 
-         document.getElementById("myGuesses").innerHTML = s;
+         document.getElementById("myGuess").innerHTML = s;
       });
 
       numberGuessedEvent.on('error', function (error) {
