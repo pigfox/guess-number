@@ -5,12 +5,8 @@ html, body {
     background-image: url('../img/dragonfly.jpg'); /* dragonfly.jpg */
     background-position: center center; /* Centers the background image horizontally and vertically */
     background-repeat: no-repeat; /* Prevents the background image from repeating */
-     /* Use one of the following options for background-size depending on your needs */
     background-size: cover; /* Cover the entire area of the element. Aspect ratio is maintained. */
-    /* OR
-    background-size: contain;
-    */
-  color: #000000;
+    color: #000000;
   }
 
   #logo{

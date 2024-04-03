@@ -206,7 +206,7 @@
 
       numberGuessedEvent.on('data', function (event) {
             console.log('event.returnValues.guessedNumber:', event.returnValues.guessedNumber);
-            console.log('event.returnValues:', event.returnValues);
+            console.log('event.returnValues:', event.returnValues.isCorrect);
         });
 
       numberGuessedEvent.on('error', function (error) {
