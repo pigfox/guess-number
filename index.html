@@ -213,6 +213,11 @@
       updatedMaxNumberEvent.on('error', function (error) {
         console.error('Error:', error);
       });
+
+      //numGuesses
+      /*
+      id="myNumGuesses"
+      * */
     })
 /*
   const decodedLog = web3.eth.abi.decodeLog(
@@ -285,7 +290,7 @@
     for (let i = 0; i < 36; i++) {
       let n = generateRandomNumber();
       s += '<div class="row">';
-      s += '<div class="number">['+n+']</div>';
+      s += '<div class="number">'+n+'</div>';
       s += '</div>';
     }
     document.getElementById("diamonds").innerHTML = s;
