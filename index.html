@@ -46,6 +46,11 @@
   const myWinsStr = "My wins: ";
   const maxNumberStr = " Max number: ";
 
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById("myGuess").innerHTML = "";
+    console.log('DOM is fully loaded');
+  });
+
   const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
     connectMetamaskBtn.addEventListener('click', () => {
       uiStart();
@@ -161,31 +166,6 @@
       input.classList.remove('red');
     });
   }
-  /*
-  // Subscribe to the NumberGuessed() event
-  contract.events.NumberGuessed()
-    .on('data', function(event) {
-      console.log('Num guessed event fired', event);
-      let s = "Attempt " + event.returnValues[2]+". You guessed " + event.returnValues[1];
-      if(event.returnValues[3]){//win
-        contract.methods.getNumWins().call()//getNumWins()
-                .then(result => {
-                  document.getElementById("contractAddress").innerHTML = "Contract: " + address;
-                  console.log("My wins: ", result);
-                  document.getElementById("myWins").innerHTML = "My wins: " + result;
-                })
-                .catch(error => {
-                  console.error("An error occurred: ", error);
-                }),
-        s+= ' and won! <img src="./img/star.png" id="star" alt="Star"/>';
-        document.getElementById('guessBtn').disabled = true;
-      }else{
-        s+=" and failed, please try again.";
-      }
-
-      document.getElementById("numGuesses").innerHTML = s;
-    }).on('error', console.error);
- */
 
   instance.methods.getNumWins().call()//getNumWins()
   .then(wins => {
@@ -241,18 +221,6 @@
       });
     })
 
-  /*
-  This code captures some data.
-  But I don't get the returned guessedNumber
-
-  let msg = {};
-  web3.currentProvider.on('message', (message) => {
-    //console.log("message.type:", message.type);
-    //console.log("message.data:", message.data);
-    msg = message
-    console.log("@221");
-  }).on('error', console.error);
-  */
   const decodedLog = web3.eth.abi.decodeLog(
           ABI.find(e => e.type === 'event' && e.name === 'NumberGuessed').inputs,
           //msg.data.result.data,
