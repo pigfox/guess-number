@@ -164,13 +164,11 @@
 
   instance.methods.getNumWins().call()//getNumWins()
   .then(wins => {
-    console.log("wins: ", wins);
     document.getElementById("myWins").innerHTML = "My wins: " + wins;
   })
   .catch(error => {
     console.error("An error occurred: ", error);
   });
-
 
  web3.eth.getBlockNumber()
     .then(latestBlockNumber => {
@@ -183,6 +181,7 @@
       numberGuessedEvent.on('data', function (event) {
         console.log("@@@@@@@@@@@@@@@@@@@@184@@@@@@@@@@@@@@@@");
         let rv = event.returnValues;
+        console.log("rv",rv);
         let s = 'You guessed ' + rv.guessedNumber;
         if (rv.isCorrect){
           s+= ' and won! <img src="./img/star.png" id="star" alt="Star"/>';
@@ -213,12 +212,13 @@
         console.error('Error:', error);
       });
     })
-
+/*
   const decodedLog = web3.eth.abi.decodeLog(
           ABI.find(e => e.type === 'event' && e.name === 'NumberGuessed').inputs,
           //msg.data.result.data,
           //msg.data.result.topics.slice(1)
   );
+ */
   console.log("msg.data", msg.data);
   console.log("NumberGuessed Event: ", decodedLog);
 
