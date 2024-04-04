@@ -223,28 +223,7 @@
   );
   console.log("msg.data", msg.data);
   console.log("NumberGuessed Event: ", decodedLog);
-/*
-    contract.events.UpdatedMaxNumber()
-      .on('data', function(event) {
-        console.log('Updated max number event fired', event);
-        let s = "Updated max number: " + event.returnValues[1];
-        document.getElementById("viewNumber").innerHTML = s;
-      }).on('error', console.error);
 
-  contract.events.NewGame()
-    .on('data', function(event) {
-      console.log('New game event fired', event);
-      contract.methods.getMaxNumber().call()
-        .then(result => {
-          console.log("Max number: ", result);
-          document.getElementById("viewNumber").innerHTML = "Max number: " + result;
-          uiEnd();
-        })
-        .catch(error => {
-          console.error("An error occurred: ", error);
-        });
-  }).on('error', console.error);
-*/
   function uiStart(){
     console.log("uiStart()");
     document.getElementById("progressbar").style.display = "block";
@@ -270,7 +249,7 @@
 
   document.addEventListener('DOMContentLoaded', function() {
     document.getElementById("myGuess").innerHTML = "";
-    console.log('DOM is fully loaded');
+    alert('DOM is fully loaded');
   });
 
   function isNumeric(value) {
