@@ -204,10 +204,6 @@
       });
 
       updatedMaxNumberEvent.on('data', function (event) {
-        let rv = event.returnValues;
-        console.log("rv", rv);
-        console.log("rv.returnValues", rv.returnValues);
-        console.log("event.maxNumber", event.maxNumber);
         document.getElementById("myMaxNumber").innerHTML = maxNumberStr + event.returnValues.maxNumber;
       });
 
