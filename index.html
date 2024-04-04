@@ -78,6 +78,8 @@
       instance.methods.getNumWins().call()//getNumWins()
         .then(result => {
           document.getElementById("contractAddress").innerHTML = "Contract: " + address;
+          document.getElementById("myGuess").innerHTML = "";
+          document.getElementById("myGuess").style.display = "block";
         }).catch(error => {
           console.error("An error occurred: ", error);
         });
