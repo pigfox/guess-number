@@ -190,7 +190,8 @@
           s+= ' and lost, please try again.'
         }
 
-         document.getElementById("myGuess").innerHTML = s;
+        document.getElementById("myGuess").innerHTML = s;
+        document.getElementById("myGuess").style.display = block;
       });
 
       numberGuessedEvent.on('error', function (error) {
@@ -242,11 +243,12 @@
     document.getElementById("maxNumber").style.display = "none";
     document.getElementById("metamaskRequired").style.display = "block";
   }
-
+/*
   document.addEventListener('DOMContentLoaded', function() {
     document.getElementById("myGuess").innerHTML = "";
     alert('DOM is fully loaded');
   });
+  */
 </script>
 <script>
   let sequence = "00000000"; // Start with a base sequence
