@@ -181,6 +181,7 @@
         });
 
       numberGuessedEvent.on('data', function (event) {
+        console.log("@@@@@@@@@@@@@@@@@@@@184@@@@@@@@@@@@@@@@");
         let rv = event.returnValues;
         let s = 'You guessed ' + rv.guessedNumber;
         if (rv.isCorrect){
