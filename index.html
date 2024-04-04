@@ -44,6 +44,7 @@
   const ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"player","type":"address"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NewGame","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"player","type":"address"},{"indexed":false,"internalType":"uint256","name":"guessedNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"numGuesses","type":"uint256"},{"indexed":false,"internalType":"bool","name":"isCorrect","type":"bool"},{"indexed":false,"internalType":"uint256","name":"numWins","type":"uint256"}],"name":"NumberGuessed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"player","type":"address"},{"indexed":false,"internalType":"uint256","name":"maxNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"UpdatedMaxNumber","type":"event"},{"inputs":[],"name":"actualNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getMaxNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getNumGuesses","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getNumWins","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getSender","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_guessedNumber","type":"uint256"}],"name":"guess","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"newGame","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumber","type":"uint256"}],"name":"setMaxNumber","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"thisAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}];
   const instance = new web3.eth.Contract(ABI, address);
   const myWinsStr = "My wins: ";
+  const maxNumberStr = " Max number: ";
 
   const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
     connectMetamaskBtn.addEventListener('click', () => {
@@ -84,8 +85,8 @@
 
       instance.methods.getMaxNumber().call()
         .then(result => {
-          console.log("Max number: ", result);
-          document.getElementById("myMaxNumber").innerHTML = "Max number: " + result;
+          console.log(maxNumberStr, result);
+          document.getElementById("myMaxNumber").innerHTML = maxNumberStr + result;
           uiEnd();
         }).catch(error => {
           console.error("An error occurred: ", error);
@@ -229,8 +230,10 @@
 
       updatedMaxNumberEvent.on('data', function (event) {
         let rv = event.returnValues;
-console.log("rv", rv);
-
+        console.log("rv", rv);
+        console.log("rv.returnValues", rv.returnValues);
+        console.log("event.maxNumber", event.maxNumber);
+        document.getElementById("myMaxNumber").innerHTML = maxNumberStr + event.returnValues.maxNumber;
       });
 
       updatedMaxNumberEvent.on('error', function (error) {
