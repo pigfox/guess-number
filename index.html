@@ -45,6 +45,7 @@
   const instance = new web3.eth.Contract(ABI, address);
   const myWinsStr = "My wins: ";
   const maxNumberStr = "Max number: ";
+  const myNumGuessesStr = "My number of guesses: ";
   let loaded = false;
 
   const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
@@ -186,6 +187,7 @@
         if (rv.isCorrect){
           s+= ' and won! <img src="./img/star.png" id="star" alt="Star"/>';
           document.getElementById("myWins").innerHTML = myWinsStr + rv.numWins;
+          document.getElementById("myNumGuesses").innerHTML = myNumGuessesStr +rv.numGuesses;
         }else{
           s+= ' and lost, please try again.'
         }
@@ -213,11 +215,6 @@
       updatedMaxNumberEvent.on('error', function (error) {
         console.error('Error:', error);
       });
-
-      //numGuesses
-      /*
-      id="myNumGuesses"
-      * */
     })
 /*
   const decodedLog = web3.eth.abi.decodeLog(
