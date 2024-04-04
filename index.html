@@ -78,7 +78,6 @@
     if (typeof Web3 !== 'undefined') {
       instance.methods.getNumWins().call()//getNumWins()
         .then(result => {
-          console.log("result:",result);
           document.getElementById("contractAddress").innerHTML = "Contract: " + address;
           document.getElementById("myGuess").innerHTML = "";
           document.getElementById("myGuess").style.display = "block";
@@ -91,7 +90,6 @@
 
       instance.methods.getMaxNumber().call()
         .then(result => {
-          console.log(maxNumberStr, result);
           document.getElementById("myMaxNumber").innerHTML = maxNumberStr + result;
           uiEnd();
         }).catch(error => {
