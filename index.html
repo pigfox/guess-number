@@ -181,7 +181,7 @@
       numberGuessedEvent.on('data', function (event) {
         console.log("@@@@@@@@@@@@@@@@@@@@184@@@@@@@@@@@@@@@@");
         let rv = event.returnValues;
-        console.log("rv",rv);
+        console.log("rv->",rv);
         let s = 'You guessed ' + rv.guessedNumber;
         if (rv.isCorrect){
           s+= ' and won! <img src="./img/star.png" id="star" alt="Star"/>';
