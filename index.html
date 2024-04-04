@@ -205,7 +205,7 @@
         });
 
       numberGuessedEvent.on('data', function (event) {
-        console.log("208",event.type);
+        console.log("208",event);
         let rv = event.returnValues;
         let s = 'You guessed ' + rv.guessedNumber;
         if (rv.isCorrect){
