@@ -46,11 +46,6 @@
   const myWinsStr = "My wins: ";
   const maxNumberStr = " Max number: ";
 
-  document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById("myGuess").innerHTML = "";
-    console.log('DOM is fully loaded');
-  });
-
   const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
     connectMetamaskBtn.addEventListener('click', () => {
       uiStart();
@@ -272,6 +267,11 @@
     document.getElementById("maxNumber").style.display = "none";
     document.getElementById("metamaskRequired").style.display = "block";
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById("myGuess").innerHTML = "";
+    console.log('DOM is fully loaded');
+  });
 
   function isNumeric(value) {
     return !isNaN(value) && Number.isFinite(value);
