@@ -127,7 +127,7 @@
     instance.methods.newGame().send({ from: ethereum.selectedAddress })
       .then(receipt => {
         console.log("Transaction receipt: ", receipt);
-        document.getElementById("numGuesses").innerHTML = "";
+        document.getElementById("myNumGuesses").innerHTML = "";
         uiEnd();
       })
       .catch(err => {
