@@ -205,7 +205,6 @@
         });
 
       numberGuessedEvent.on('data', function (event) {
-        console.log("208",event);
         let rv = event.returnValues;
         let s = 'You guessed ' + rv.guessedNumber;
         if (rv.isCorrect){
@@ -223,6 +222,20 @@
         });
 
       //max number
+      const updatedMaxNumberEvent = instance.events.UpdatedMaxNumber({
+        fromBlock: fromBlockNumber,
+        toBlock: 'latest' // 'latest' to get events until the latest block
+      });
+
+      updatedMaxNumberEvent.on('data', function (event) {
+        let rv = event.returnValues;
+console.log("rv", rv);
+
+      });
+
+      updatedMaxNumberEvent.on('error', function (error) {
+        console.error('Error:', error);
+      });
     })
 
   /*
