@@ -45,6 +45,7 @@
   const instance = new web3.eth.Contract(ABI, address);
   const myWinsStr = "My wins: ";
   const maxNumberStr = "Max number: ";
+  let loaded = false;
 
   const connectMetamaskBtn = document.getElementById('connectMetamaskBtn');
     connectMetamaskBtn.addEventListener('click', () => {
@@ -105,6 +106,7 @@
       guessNumberInput.focus();
       return;
     }
+    loaded = true;
     uiStart();
     instance.methods.guess(guessNumber).send({ from: ethereum.selectedAddress })
       .then(receipt => {
@@ -179,7 +181,6 @@
         });
 
       numberGuessedEvent.on('data', function (event) {
-        console.log("@@@@@@@@@@@@@@@@@@@@184@@@@@@@@@@@@@@@@");
         let rv = event.returnValues;
         console.log("rv->",rv);
         let s = 'You guessed ' + rv.guessedNumber;
@@ -190,8 +191,10 @@
           s+= ' and lost, please try again.'
         }
 
-        document.getElementById("myGuess").innerHTML = s;
-        document.getElementById("myGuess").style.display = "block";
+        if(loaded){
+          document.getElementById("myGuess").innerHTML = s;
+          document.getElementById("myGuess").style.display = "block";
+        }
       });
 
       numberGuessedEvent.on('error', function (error) {
