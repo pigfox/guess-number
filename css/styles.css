@@ -119,8 +119,8 @@ a:active {
 }
 
 #diamonds{
-  width: 150px;
-  height: 150px;
+  width: 149px;
+  height: 149px;
   border: 4px solid #000000;
   border-radius: 5px;
   background-image: url('../img/red-bg.jpg');
