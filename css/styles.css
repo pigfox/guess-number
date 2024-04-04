@@ -165,6 +165,6 @@ a:active {
     transform: scale(1);
   }
 }
-#myGuess{
+#myGuess, #myWins, #myNumGuesses, #myMaxNumber{
   display: none;
 }
