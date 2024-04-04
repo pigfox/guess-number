@@ -217,13 +217,9 @@
 /*
   const decodedLog = web3.eth.abi.decodeLog(
           ABI.find(e => e.type === 'event' && e.name === 'NumberGuessed').inputs,
-          //msg.data.result.data,
-          //msg.data.result.topics.slice(1)
   );
- */
-  console.log("msg.data", msg.data);
   console.log("NumberGuessed Event: ", decodedLog);
-
+ */
   function uiStart(){
     console.log("uiStart()");
     document.getElementById("progressbar").style.display = "block";
