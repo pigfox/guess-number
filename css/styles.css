@@ -132,6 +132,7 @@ a:active {
   padding-left: 2px;
   padding-top: 1px;
   animation: pulse 10s linear infinite; /* */
+  animation-direction: alternate;
 }
 
 .row{
