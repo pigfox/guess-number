@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guess a number on the Sepolia chain</title>
+  <meta name="keywords" content="dapp, solidity, javascript, sepolia, demo by pigfox.com"/>
+  <meta name="description" content="Guess a number on the Sepolia chain"/>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="./css/styles.css"/>
+  <script type="module">
+    import { createPublicClient, createWalletClient, http, getContract } from "https://esm.sh/viem";
+    import { sepolia } from "https://esm.sh/viem/chains";
+
+    const CONTRACT_ADDRESS = "0x701DaC3beaa53eB70a1a79116604bc292f39c696";
+    const ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"Address","name":"player","type":"Address"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"NewGame","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"Address","name":"player","type":"Address"},{"indexed":false,"internalType":"uint256","name":"guessedNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"numGuesses","type":"uint256"},{"indexed":false,"internalType":"bool","name":"isCorrect","type":"bool"},{"indexed":false,"internalType":"uint256","name":"numWins","type":"uint256"}],"name":"NumberGuessed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"Address","name":"player","type":"Address"},{"indexed":false,"internalType":"uint256","name":"maxNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"UpdatedMaxNumber","type":"event"},{"inputs":[],"name":"actualNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getMaxNumber","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getNumGuesses","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getNumWins","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getSender","outputs":[{"internalType":"Address","name":"","type":"Address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_guessedNumber","type":"uint256"}],"name":"guess","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"newGame","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_maxNumber","type":"uint256"}],"name":"setMaxNumber","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"thisAddress","outputs":[{"internalType":"Address","name":"","type":"Address"}],"stateMutability":"view","type":"function"}];
+  
+    const publicClient = createPublicClient({
+      chain: sepolia,
+      transport: http(),
+    });
+
+    const walletClient = createWalletClient({
+      chain: sepolia,
+      transport: window.ethereum ? window.ethereum : http(),
+    });
+
+    let userAccount = null;
+    let contract = getContract({
+      address: CONTRACT_ADDRESS,
+      abi: ABI,
+      client: publicClient
+    });
+
+    document.getElementById('connectMetamaskBtn').addEventListener('click', async () => {
+      if (window.ethereum) {
+        try {
+          const accounts = await walletClient.requestAddresses();
+          userAccount = accounts[0];
+          document.getElementById('connectMetamaskBtn').textContent = 'Connected';
+          console.log('Connected account:', userAccount);
+        } catch (error) {
+          console.error('User denied access', error);
+        }
+      } else {
+        alert('Please install MetaMask.');
+      }
+    });
+
+    document.getElementById('connectContractBtn').addEventListener('click', async () => {
+      try {
+        const numWins = await publicClient.readContract({
+          address: CONTRACT_ADDRESS,
+          abi: ABI,
+          functionName: 'getNumWins'
+        });
+        document.getElementById("myWins").innerHTML = `My wins: ${numWins}`;
+        
+        const maxNumber = await publicClient.readContract({
+          address: CONTRACT_ADDRESS,
+          abi: ABI,
+          functionName: 'getMaxNumber'
+        });
+        document.getElementById("myMaxNumber").innerHTML = `Max number: ${maxNumber}`;
+      } catch (error) {
+        console.error('Error fetching contract data:', error);
+      }
+    });
+
+    document.getElementById('guessBtn').addEventListener('click', async () => {
+      const guessNumber = document.getElementById('guessNumber').value;
+      if (!guessNumber) {
+        alert("Please enter a guess.");
+        return;
+      }
+      try {
+        const { request } = await publicClient.simulateContract({
+          address: CONTRACT_ADDRESS,
+          abi: ABI,
+          functionName: "guess",
+          args: [parseInt(guessNumber)],
+          account: userAccount
+        });
+
+        await walletClient.writeContract(request);
+        alert("Guess submitted!");
+      } catch (error) {
+        console.error("Transaction error:", error);
+      }
+    });
+
+    document.getElementById('newGameBtn').addEventListener('click', async () => {
+      try {
+        const { request } = await publicClient.simulateContract({
+          address: CONTRACT_ADDRESS,
+          abi: ABI,
+          functionName: "newGame",
+          account: userAccount
+        });
+
+        await walletClient.writeContract(request);
+        alert("New game started!");
+      } catch (error) {
+        console.error("Transaction error:", error);
+      }
+    });
+
+    document.getElementById('setMaxNumberBtn').addEventListener('click', async () => {
+      const maxNumber = document.getElementById('maxNumber').value;
+      if (!maxNumber) {
+        alert("Please enter a max number.");
+        return;
+      }
+      try {
+        const { request } = await publicClient.simulateContract({
+          address: CONTRACT_ADDRESS,
+          abi: ABI,
+          functionName: "setMaxNumber",
+          args: [parseInt(maxNumber)],
+          account: userAccount
+        });
+
+        await walletClient.writeContract(request);
+        alert("Max number set!");
+      } catch (error) {
+        console.error("Transaction error:", error);
+      }
+    });
+
+  </script>
+</head>
+<body>
+  <div class="content">
+    <a href="/"><div id="logo"><div id="numbers"></div></div></a>
+    <h3 id="tagline">Guess a number on Sepolia</h3>
+    <div id="metamaskRequired">Metamask required</div>
+    <div id="controls">
+      <div id="contractAddress"></div>
+      <div id="myWins"></div>
+      <div id="myGuess"></div>
+      <div id="myNumGuesses"></div>
+      <div id="myMaxNumber"></div>
+      <button id="connectMetamaskBtn" class="btn shape">Connect Metamask</button>
+      <button id="connectContractBtn" class="btn shape">Connect Contract</button>
+      <div>
+        <button id="guessBtn" class="btn shape">Guess</button>
+        <input type="number" id="guessNumber" class="shape nums input" placeholder="num"/>
+      </div>
+      <button id="newGameBtn" class="btn shape">New Game</button>
+      <div>
+        <button id="setMaxNumberBtn" class="btn shape">Set Max</button>
+        <input type="number" id="maxNumber" class="shape nums input" placeholder="num"/>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
